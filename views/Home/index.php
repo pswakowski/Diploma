@@ -1,6 +1,6 @@
 <h1 class="h2">Aktualności</h1>
 <hr>
-<?php Messages::display(); ?>
+<?php Helpers::displayMessage(); ?>
 <div class="table-responsive">
     <form method="post">
         <h5>Dodaj nowy wpis <input type="submit" name="send" style="padding: 2px 8px 0 7px;" class="btn btn-primary" value="Wyślij&rarr;"></h5>

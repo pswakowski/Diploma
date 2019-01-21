@@ -16,4 +16,59 @@ class Helpers
         }
         return $color;
     }
+
+    public static function redirect($page = NULL, $message = NULL, $message_type = NULL)
+    {
+        if (is_string($page))
+        {
+            $location = $page;
+        } else
+        {
+            $location = $_SERVER['SCRIPT_NAME'];
+        }
+
+        // check for message
+        if ($message != NULL)
+        {
+            $_SESSION['message'] = $message;
+        }
+
+        if ($message != NULL)
+        {
+            $_SESSION['message_type'] = $message_type;
+        }
+
+        header('Location: ' . $location);
+        exit;
+    }
+
+    public static function displayMessage()
+    {
+        if (!empty($_SESSION['message']))
+        {
+            $message = $_SESSION['message'];
+
+            if (!empty($_SESSION['message_type']))
+            {
+                // Assign Message Var
+                $message_type = $_SESSION['message_type'];
+
+                // Create output
+                if ($message_type == 'error')
+                {
+                    echo '<div class="alert alert-danger">' . $message . '</div>';
+                } else
+                {
+                    echo '<div class="alert alert-success">' . $message . '</div>';
+                }
+            }
+            unset($_SESSION['message']);
+            unset($_SESSION['message_type']);
+        }
+    }
+
+    public static function in_array_r($item , $array)
+    {
+        return preg_match('/"'.preg_quote($item, '/').'"/i' , json_encode($array));
+    }
 }

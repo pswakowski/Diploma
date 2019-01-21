@@ -17,28 +17,17 @@ class ProjectsModel extends Model
         // Sanitizing POST
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-//        setcookie("namec", $post['name'], time()+10);
-//        setcookie("descriptionc", $post['description'], time()+10);
-//        setcookie("deadlinec", $post['deadline'], time()+10);
-//        setcookie("deadlinetimec", $post['deadlinetime'], time()+10);
-
-
 
         $rows2 = Array ($_POST['name'], $_POST['description'], $_POST['deadline'], $_POST['deadlinetime']);
 
-        $data = array_merge($rows, $rows2);
+        $data = $rows2;
 
         if($post['submit'])
         {
-            if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['attachment[]'] == 'Wybierz plik')
+            if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['deadlinetime'] == '')
             {
-                Messages::setMessage('Błąd! Nie uzupełniłes wszystkich danych!', 'error');
-//                unset($_COOKIE['namec']);
-//                unset($_COOKIE['descriptionc']);
-//                unset($_COOKIE['deadlinec']);
-//                unset($_COOKIE['deadlinetimec']);
-
-
+                $_SESSION['posted'] = $data;
+                Helpers::redirect('/projects/add', 'Błąd! Nie uzupełniłes wszystkich danych!', 'error');
                 return $data;
             }
 
@@ -47,7 +36,6 @@ class ProjectsModel extends Model
             // Insert into DB
             $this->query("INSERT INTO projects (name, description, start_date, end_date, author_id, status) 
                           VALUES (:name, :description, current_timestamp, :end_date, {$_SESSION['user_data']['id']}, '1')");
-
 
             $this->bind(':name', $post['name']);
             $this->bind(':description', $post['description']);
@@ -58,7 +46,8 @@ class ProjectsModel extends Model
             // verify
             if ($this->lastInsertId())
             {
-                header('Location: '. ROOT_URL . '/projects');
+                Helpers::redirect('/projects', 'Utworzyłeś nowy projekt.', 'success');
+                unset($_SESSION['posted']);
             }
             return;
 

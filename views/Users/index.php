@@ -1,6 +1,7 @@
     <h1 class="h2">Użytkownicy</h1>
     <hr>
-    <?php Messages::display(); ?>
+    <?php Helpers::displayMessage();
+    ?>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead class="thead-dark">

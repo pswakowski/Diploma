@@ -15,7 +15,6 @@ class UserModel extends Model
         $this->query('SELECT * FROM roles');
         $rows = $this->resultSet();
 
-
         // Sanitizing POST
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -23,10 +22,10 @@ class UserModel extends Model
 
         if($post['submit'])
         {
-            if($post['email'] == '' || $post['name'] == '' || $post['lastname'] == '' || $post['password'] == 'roles_id')
+            if($post['email'] == '' || $post['name'] == '' || $post['lastname'] == '' || $post['password'] == '')
             {
-                Messages::setMessage('Błąd! Nie uzupełniłes wszystkich danych!', 'error');
-                return;
+                Helpers::redirect('/users/add', 'Błąd! Nie uzupełniłeś wszystkich danych!', 'error');
+                return 0;
             }
             // Insert into DB
             $this->query("INSERT INTO users (email, name, lastname, password, status, create_date, roles_id) 
@@ -43,9 +42,8 @@ class UserModel extends Model
             // verify
             if ($this->lastInsertId())
             {
-                header('Location: '. ROOT_URL . '/users');
+                Helpers::redirect('/users', 'Dodałeś nowego użytkownika', 'success');
             }
-            return;
         }
 
         return $rows;

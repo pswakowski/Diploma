@@ -1,11 +1,6 @@
 <h1 class="h2">Edytuj zadanie</h1>
 <hr>
-<?php
-function in_array_r($item , $array)
-{
-    return preg_match('/"'.preg_quote($item, '/').'"/i' , json_encode($array));
-}
-?>
+<?php Helpers::displayMessage(); ?>
 <form class="row" method="post">
     <div class="col">
         <div class="form-group">
@@ -16,7 +11,6 @@ function in_array_r($item , $array)
             <label for="formGroupExampleInput2">Treść zadania</label>
             <textarea name="description" rows="8" type="text" class="form-control" id="formGroupExampleInput2" placeholder=""><?php echo $viewModel['tasks']['description']; ?></textarea>
         </div>
-
         <div class="row">
             <div class="col">
                 <div class="form-group">
@@ -62,7 +56,7 @@ function in_array_r($item , $array)
         <?php foreach($viewModel['all_admins'] as $item) : ?>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="admin_id[]" id="exampleRadios1" value="<?php echo $item['id']; ?>"
-                    <?php if(in_array_r($item['name'], $viewModel['admins'])) : ?>
+                    <?php if(Helpers::in_array_r($item['name'], $viewModel['admins'])) : ?>
                         checked
                     <?php endif; ?>>
                 <label class="form-check-label" for="exampleRadios1">
@@ -75,7 +69,7 @@ function in_array_r($item , $array)
         <?php foreach($viewModel['all_users'] as $item) : ?>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="admin_id[]" id="exampleRadios1" value="<?php echo $item['id']; ?>"
-                    <?php if(in_array_r($item['name'], $viewModel['users'])) : ?>
+                    <?php if(Helpers::in_array_r($item['name'], $viewModel['users'])) : ?>
                         checked
                     <?php endif; ?>>
                 <label class="form-check-label" for="exampleRadios1">

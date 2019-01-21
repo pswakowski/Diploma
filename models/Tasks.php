@@ -34,13 +34,8 @@ class TasksModel extends Model
         {
             if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['project_id'] == '' || $post['attachment[]'] == 'Wybierz plik')
             {
-                Messages::setMessage('Błąd! Nie uzupełniłes wszystkich danych!', 'error');
-
-                setcookie("name", $post['name'], time()+1800);
-                setcookie("description", $post['description'], time()+1800);
-                setcookie("deadline", $post['deadline'], time()+1800);
-                setcookie("deadlinetime", $post['deadlinetime'], time()+1800);
-
+                $_SESSION['posted'] = $post;
+                Helpers::redirect('/tasks/add','Błąd! Nie uzupełniłes wszystkich danych!', 'error');
                 return $data;
             }
 
@@ -58,11 +53,11 @@ class TasksModel extends Model
             // verify
             if ($this->lastInsertId())
             {
-                header('Location: '. ROOT_URL . '/tasks');
+                Helpers::redirect('/tasks', 'Utworzyłeś nowe zadanie.', 'success');
             }
             return;
         }
-
+        unset($_SESSION['posted']);
         return $data;
     }
 
@@ -121,17 +116,12 @@ class TasksModel extends Model
                 // verify
                 if ($this->lastInsertId())
                 {
-                    header('Location: '. ROOT_URL . $_SERVER['REQUEST_URI']);
-                    Messages::setMessage('Dodałes nowy komentarz!','success');
+                    Helpers::redirect('/tasks/show/' . $id, 'Dodałes nowy komentarz.', 'success');
                 }
                 return;
             }
-
-
-            return $data;
         }
-
-        header('Location:' . ROOT_URL . '/tasks');
+        return $data;
     }
 
     public function edit()
@@ -183,7 +173,7 @@ class TasksModel extends Model
             if($post['submit'])
             {
                 // Insert into DB
-                $deadline = $post['deadline']. ' ' .$post['deadlinetime'];
+                $deadline = $post['deadline'] . ' ' . $post['deadlinetime'];
 
                 $this->query("UPDATE tasks SET name = :name, description = :description, end_date = :end_date, projects_id = :projects_id where id = $id");
 
@@ -197,17 +187,11 @@ class TasksModel extends Model
                 // verify
                 if ($this->lastInsertId())
                 {
-                    Messages::setMessage('Dodałes nowy komentarz!','success');
-                    header('Location: '. ROOT_URL . '/tasks');
+                    Helpers::redirect('/tasks', 'Zaktualizowałeś zadanie.', 'success');
                 }
                 return;
             }
-
-
-            return $data;
         }
-
-        header('Location:' . ROOT_URL . '/tasks');
+        return $data;
     }
-
 }

@@ -22,8 +22,7 @@ class HomeModel extends Model
             // verify
             if ($this->lastInsertId())
             {
-                header('Location: '. ROOT_URL . '/');
-                Messages::setMessage('Dodałes nowy wpis społecznościowy!','success');
+                Helpers::redirect('/', 'Dodałes nowy wpis społecznościowy!', 'success');
             }
             return;
         }

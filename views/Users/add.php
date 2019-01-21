@@ -1,6 +1,8 @@
 <h1 class="h2">Dodaj nowego użytkownika</h1>
 <hr>
-<?php Messages::display(); ?>
+<?php Helpers::displayMessage();
+print_r($_SESSION);
+?>
 <div class="panel panel-dafult">
     <div class="panel-body">
         <form method="POST">

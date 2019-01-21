@@ -1,12 +1,6 @@
 <h1 class="h2">Podgląd zadania</h1>
 <hr>
-
-<?php
-function in_array_r($item , $array)
-{
-    return preg_match('/"'.preg_quote($item, '/').'"/i' , json_encode($array));
-}
-?>
+<?php Helpers::displayMessage(); ?>
 <div class="row">
     <div class="col">
         <div class="form-group">
@@ -51,7 +45,7 @@ function in_array_r($item , $array)
         <?php foreach($viewModel['all_admins'] as $item) : ?>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="admin_id[]" id="exampleRadios1" value="<?php echo $item['id']; ?>"
-                        <?php if(in_array_r($item['name'], $viewModel['admins'])) : ?>
+                        <?php if(Helpers::in_array_r($item['name'], $viewModel['admins'])) : ?>
                             checked
                     <?php endif; ?> disabled>
                     <label class="form-check-label" for="exampleRadios1">
@@ -64,7 +58,7 @@ function in_array_r($item , $array)
         <?php foreach($viewModel['all_users'] as $item) : ?>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="admin_id[]" id="exampleRadios1" value="<?php echo $item['id']; ?>"
-                    <?php if(in_array_r($item['name'], $viewModel['users'])) : ?>
+                    <?php if(Helpers::in_array_r($item['name'], $viewModel['users'])) : ?>
                         checked
                     <?php endif; ?> disabled>
                 <label class="form-check-label" for="exampleRadios1">

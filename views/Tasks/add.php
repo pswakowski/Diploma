@@ -1,24 +1,24 @@
 <h1 class="h2">Utwórz nowe zadanie</h1>
 <hr>
-<?php Messages::display(); ?>
+<?php Helpers::displayMessage(); ?>
 <form class="row" method="post">
     <div class="col">
         <div class="form-group">
             <label for="formGroupExampleInput">Nazwa zadania</label>
-            <input name="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="" value="<?php echo $_POST['name']; ?>">
+            <input name="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="" value="<?php echo $_SESSION['posted']['name']; ?>">
         </div>
         <div class="form-group">
             <label for="formGroupExampleInput2">Treść zadania</label>
-            <textarea name="description" rows="8" type="text" class="form-control" id="formGroupExampleInput2" placeholder=""><?php echo $_POST['description']; ?></textarea>
+            <textarea name="description" rows="8" type="text" class="form-control" id="formGroupExampleInput2" placeholder=""><?php echo $_SESSION['posted']['description']; ?></textarea>
         </div>
 
         <div class="row">
             <div class="col">
                 <div class="form-group">
                     <label class="my-1 mr-2" for="formGroupExampleInput2">Data:</label>
-                    <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="date" name="deadline" value="<?php echo $_POST['deadline']; ?>">
+                    <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="date" name="deadline" value="<?php echo $_SESSION['posted']['deadline']; ?>">
                     <br><label class="my-1 mr-2" for="formGroupExampleInput2">Godzina:</label>
-                    <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="time" name="deadlinetime" value="<?php echo $_POST['deadlinetime']; ?>">
+                    <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="time" name="deadlinetime" value="<?php echo $_SESSION['posted']['deadlinetime']; ?>">
                 </div>
                 <div class="form-group">
                     <label class="my-1 mr-2" for="formGroupExampleInput2">Projekt</label>
