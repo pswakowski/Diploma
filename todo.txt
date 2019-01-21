@@ -1,0 +1,19 @@
+// todo list
+
+- edit users insert to database
+- save each users's task to database
+- change user's status instead of deleting
+- show role name in Users
+- edit projects
+- finishing projects
+- finishing tasks
+- colors for outdated tasks and projects
+- add message class from joblister https://www.youtube.com/watch?v=LEkjrQMmIK0
+- Social media delete for admins
+- attachments for tasks (Documents)
+- record of working time
+- Calendar (maybe js?)
+- settings stuff (statistics?)
+- milestones(?)
+
+deadline 24.01.19r.
