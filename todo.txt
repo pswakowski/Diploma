@@ -1,5 +1,6 @@
 // todo list
 
+- why isnt message showing after update?
 - edit users insert to database
 - save each users's task to database
 - change user's status instead of deleting
@@ -7,7 +8,6 @@
 - edit projects
 - finishing projects
 - finishing tasks
-- add message class from joblister https://www.youtube.com/watch?v=LEkjrQMmIK0
 - Social media delete for admins
 - attachments for tasks (Documents)
 - record of working time
