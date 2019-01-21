@@ -9,6 +9,7 @@ require ('classes/Bootstrap.php');
 require ('classes/Controller.php');
 require ('classes/Model.php');
 require ('classes/Messages.php');
+require ('classes/Helpers.php');
 
 // include controllers
 require ('controllers/Home.php');

@@ -7,7 +7,6 @@
 - edit projects
 - finishing projects
 - finishing tasks
-- colors for outdated tasks and projects
 - add message class from joblister https://www.youtube.com/watch?v=LEkjrQMmIK0
 - Social media delete for admins
 - attachments for tasks (Documents)

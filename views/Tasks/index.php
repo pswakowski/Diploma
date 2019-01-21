@@ -17,7 +17,7 @@
         </thead>
         <tbody>
         <?php foreach($viewModel as $item) : ?>
-            <tr class="table">
+            <tr class="table" <?php echo Helpers::isPast($item['end_date']); ?>>
                 <th scope="row"><?php echo $item['tasks_id']  ?></th>
                 <td><?php echo $item['tasks_name'] ?></td>
                 <td><?php echo $item['projects_name']  ?></td>

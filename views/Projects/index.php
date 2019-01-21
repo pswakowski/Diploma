@@ -14,12 +14,12 @@
         </thead>
         <tbody>
         <?php foreach($viewModel as $item) : ?>
-            <tr class="table">
-                <th scope="row"><?php echo $item['projects_id']  ?></th>
-                <td><?php echo $item['name'] ?></td>
-                <td><?php echo $item['end_date']  ?></td>
+            <tr class="table" <?php echo Helpers::isPast($item['end_date']); ?>>
+                <th scope="row"><?php echo $item['projects_id'];  ?></th>
+                <td><?php echo $item['name']; ?></td>
+                <td><?php echo $item['end_date'];  ?></td>
                 <td><?php echo $item['user_name'] . ' ' . $item['user_lastname'];  ?></td>
-                <td><a href="<?php echo ROOT_URL; ?>/projects/show/<?php echo $item['projects_id']  ?>" class="btn btn-dark">Zobacz</a></td>
+                <td><a href="<?php echo ROOT_URL; ?>/projects/show/<?php echo $item['projects_id'];  ?>" class="btn btn-dark">Zobacz</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
