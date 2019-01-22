@@ -38,7 +38,7 @@ class HomeModel extends Model
         if($post['submit'])
         {
             // Insert into DB
-            $this->query("SELECT * FROM users where email = :email AND password = :password");
+            $this->query("SELECT * FROM users where email = :email AND password = :password AND status = '1'");
 
             $this->bind(':email', $post['email']);
             $this->bind(':password', $password);

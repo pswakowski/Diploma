@@ -1,10 +1,6 @@
 <h1 class="h2">Edytuj użytkownika</h1>
 <hr>
-<?php Messages::display(); ?>
-<pre>
-    <?php print_r($viewModel);
-    ?>
-</pre>
+<?php Helpers::displayMessage(); ?>
 <div class="panel panel-dafult">
     <div class="panel-body">
         <form method="POST">
@@ -15,8 +11,6 @@
                 <input type="text" name="name" class="form-control" value="<?php echo $viewModel['users']['name']; ?>" />
                 <label>Nazwisko: </label>
                 <input type="text" name="lastname" class="form-control" value="<?php echo $viewModel['users']['lastname']; ?>" />
-                <label>Hasło: </label>
-                <input type="text" name="password" class="form-control" value="<?php echo $viewModel['users']['password']; ?>" />
                 <label>Rola użytkownika: </label>
                 <select class="form-custom-select" name="roles_id">
                     <?php foreach($viewModel['roles'] as $item) : ?>

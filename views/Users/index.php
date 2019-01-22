@@ -10,7 +10,6 @@
                 <th scope="col">Email</th>
                 <th scope="col">Imię</th>
                 <th scope="col">Nazwisko</th>
-                <th scope="col">Ostatnie logowanie</th>
                 <th scope="col">Utworzono</th>
                 <th scope="col">Rola</th>
                 <th scope="col">Akcje</th>
@@ -23,10 +22,15 @@
                 <td><?php echo $item['email'] ?></td>
                 <td><?php echo $item['name']  ?></td>
                 <td><?php echo $item['lastname']  ?></td>
-                <td><?php echo $item['last_login']  ?></td>
                 <td><?php echo $item['create_date']  ?></td>
-                <td><?php echo $item['roles_id']  ?></td>
-                <td><a href="users/edit/<?php echo $item['id']  ?>" class="btn btn-dark">Edytuj</a> <a href="users/delete/<?php echo $item['id']  ?>" class="btn btn-danger">Usuń</a></td>
+                <td><?php echo $item['role_name']  ?></td>
+                <td>
+                    <a href="users/edit/<?php echo $item['id']  ?>" class="btn btn-dark">Edytuj</a>
+                    <?php if ($item['status'] != 1) : ?>
+                        <a href="users/active/<?php echo $item['id']  ?>" class="btn btn-success">Aktywuj</a>
+                    <?php else : ?>
+                        <a href="users/inactive/<?php echo $item['id']  ?>" class="btn btn-danger">Dezaktywuj</a></td>
+                    <?php endif; ?>
             </tr>
             <?php endforeach; ?>
             </tbody>

@@ -43,4 +43,22 @@ class Users extends Controller
         //redirect
         header('Location:' . ROOT_URL . '/home/login');
     }
+
+    protected function inactive()
+    {
+        $id = $_GET['id'];
+        $model = new UserModel();
+        $model->query("UPDATE users set status = '0' where id = $id");
+        $model->execute();
+        Helpers::redirect('/users', 'Zmieniłeś status użytkownika o ID: ' . $id . ' na nieaktywny.', 'success');
+    }
+
+    protected function active()
+    {
+        $id = $_GET['id'];
+        $model = new UserModel();
+        $model->query("UPDATE users set status = '1' where id = $id");
+        $model->execute();
+        Helpers::redirect('/users', 'Zmieniłeś status użytkownika o ID: ' . $id . ' na aktywny.', 'success');
+    }
 }

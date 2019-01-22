@@ -1,9 +1,6 @@
 // todo list
 
-- edit users insert to database
 - save each users's task to database
-- change user's status instead of deleting
-- show role name in Users
 - edit projects
 - finishing projects
 - finishing tasks
