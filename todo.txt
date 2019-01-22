@@ -1,6 +1,5 @@
 // todo list
 
-- why isnt message showing after update?
 - edit users insert to database
 - save each users's task to database
 - change user's status instead of deleting
