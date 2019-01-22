@@ -71,4 +71,21 @@ class Helpers
     {
         return preg_match('/"'.preg_quote($item, '/').'"/i' , json_encode($array));
     }
+
+    public static function get_working_time($time)
+    {
+        $now = new DateTime();
+        $datetime = new DateTime($time);
+
+        // TODO
+//        $start_time = new DateTime("08:00:00");
+//        $end_time = new DateTime("18:00:00");
+//
+//        if ($start_time < $datetime)
+//        {
+//            $datetime = new DateTime("08:00:00");
+//        }
+
+        return $datetime->diff($now)->format("%h godz. %i min.");
+    }
 }

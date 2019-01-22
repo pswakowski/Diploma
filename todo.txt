@@ -1,12 +1,12 @@
 // todo list
 
+- finish workingtime
 - save each users's task to database
 - edit projects
 - finishing projects
 - finishing tasks
 - Social media delete for admins
 - attachments for tasks (Documents)
-- record of working time
 - Calendar (maybe js?)
 - settings stuff (statistics?)
 - milestones(?)

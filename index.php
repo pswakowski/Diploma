@@ -16,6 +16,7 @@ require ('controllers/Users.php');
 require ('controllers/Tasks.php');
 require ('controllers/Projects.php');
 require ('controllers/Calendar.php');
+require ('controllers/Records.php');
 
 // include models
 require ('models/User.php');
@@ -23,6 +24,7 @@ require ('models/Home.php');
 require ('models/Tasks.php');
 require ('models/Projects.php');
 require ('models/Calendar.php');
+require ('models/Records.php');
 
 
 $bootstrap = new Bootstrap($_GET);

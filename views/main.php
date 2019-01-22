@@ -53,8 +53,8 @@
             <li <?php if (strstr($_SERVER['REQUEST_URI'], '/users')) echo 'class="active"'; ?>>
                 <a href="<?php echo ROOT_URL; ?>/users"><span data-feather="users"></span> Użytkownicy</a>
             </li>
-            <li <?php if (strstr($_SERVER['REQUEST_URI'], '/workingtime')) echo 'class="active"'; ?>>
-                <a href="<?php echo ROOT_URL; ?>/workingtime"><span data-feather="watch"></span> Ewidencja czasu pracy</a>
+            <li <?php if (strstr($_SERVER['REQUEST_URI'], '/records')) echo 'class="active"'; ?>>
+                <a href="<?php echo ROOT_URL; ?>/records"><span data-feather="watch"></span> Ewidencja czasu pracy</a>
             </li>
             <li <?php if (strstr($_SERVER['REQUEST_URI'], '/social')) echo 'class="active"'; ?>>
                 <a href="<?php echo ROOT_URL; ?>/social"><span data-feather="message-circle"></span> Social media</a>
