@@ -60,7 +60,7 @@ class HomeModel extends Model
             }
             else
             {
-                Messages::setMessage('Niepoprawne dane logowania', 'error');
+                Helpers::redirect('/home/login', 'Niepoprawne dane logowania', 'error');
             }
         }
         return;

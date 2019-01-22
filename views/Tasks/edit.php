@@ -1,6 +1,5 @@
 <h1 class="h2">Edytuj zadanie</h1>
 <hr>
-<?php Helpers::displayMessage(); ?>
 <form class="row" method="post">
     <div class="col">
         <div class="form-group">

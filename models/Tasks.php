@@ -170,10 +170,11 @@ class TasksModel extends Model
 
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+            $deadline = $post['deadline'] . ' ' . $post['deadlinetime'];
+
             if($post['submit'])
             {
                 // Insert into DB
-                $deadline = $post['deadline'] . ' ' . $post['deadlinetime'];
 
                 $this->query("UPDATE tasks SET name = :name, description = :description, end_date = :end_date, projects_id = :projects_id where id = $id");
 
@@ -185,11 +186,7 @@ class TasksModel extends Model
                 $this->execute();
 
                 // verify
-                if ($this->lastInsertId())
-                {
-                    Helpers::redirect('/tasks', 'Zaktualizowałeś zadanie.', 'success');
-                }
-                return;
+                Helpers::redirect('/tasks/show/' . $id, 'Zaktualizowałeś zadanie.', 'success');
             }
         }
         return $data;

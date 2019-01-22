@@ -104,7 +104,7 @@
         
         <footer>
             <hr>
-            &copy; Przemysław Swakowski 2018
+            &copy; Przemysław Swakowski 2019
         </footer>
         <br>
     </div>

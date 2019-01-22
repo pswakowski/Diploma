@@ -26,8 +26,9 @@
     <input name="password" type="password" id="inputPassword" class="form-control" placeholder="*******" required>
 
     <input class="btn btn-lg btn-primary btn-block" name="submit" type="submit" value="Zaloguj się">
-    <?php Messages::display(); ?>
-    <p class="mt-5 mb-3 text-muted">&copy; Przemysław Swakowski 2018</p>
+    <br>
+    <?php Helpers::displayMessage(); ?>
+    <p class="mt-5 mb-3 text-muted">&copy; Przemysław Swakowski 2019</p>
 </form>
 </body>
 </html>
