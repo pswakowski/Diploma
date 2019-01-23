@@ -74,18 +74,13 @@ class Helpers
 
     public static function get_working_time($time)
     {
-        $now = new DateTime();
-        $datetime = new DateTime($time);
-
-        // TODO
-//        $start_time = new DateTime("08:00:00");
-//        $end_time = new DateTime("18:00:00");
-//
-//        if ($start_time < $datetime)
-//        {
-//            $datetime = new DateTime("08:00:00");
-//        }
-
-        return $datetime->diff($now)->format("%h godz. %i min.");
+        $date_now = new DateTime();
+        $date_from_base = new DateTime($time);
+        $end_working_day = new DateTime("18:00:00");
+        if ($date_now > $end_working_day)
+        {
+            return $end_working_day->diff($date_from_base)->format("%h godz. %i min. %s");
+        }
+        return $date_from_base->diff($date_now)->format("%h godz. %i min. %s");
     }
 }

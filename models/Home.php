@@ -26,7 +26,6 @@ class HomeModel extends Model
             }
             return;
         }
-
         return $rows;
     }
 
@@ -53,10 +52,24 @@ class HomeModel extends Model
                     "name" => $row['name'],
                     "role" => $row['roles_id'],
                 );
-                $this->query("UPDATE users SET last_login = CURRENT_TIMESTAMP  where email = :email");
-                $this->bind(':email', $post['email']);
-                $this->single();
-                header('Location:'. ROOT_URL);
+
+                if (date("H:i:s") > "08:00:00" && date("H:i:s") < "18:00:00")
+                {
+                    $time = date("Y-m-d H:i:s");
+                    $this->query("UPDATE users SET last_login = :time where email = :email");
+                    $this->bind(':email', $post['email']);
+                    $this->bind(':time', $time);
+                    $this->single();
+                }
+                if (date("H:i:s") > "07:00:00" && date("H:i:s") < "08:00:00")
+                {
+                    $time = date("Y-m-d") . " 08:00:00";
+                    $this->query("UPDATE users SET last_login = :time where email = :email");
+                    $this->bind(':email', $post['email']);
+                    $this->bind(':time', $time);
+                    $this->single();
+                }
+                Helpers::redirect(ROOT_PATH, 'Zalogowałeś się poprawnie.', 'success');
             }
             else
             {

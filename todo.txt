@@ -1,6 +1,5 @@
 // todo list
 
-- finish workingtime
 - save each users's task to database
 - edit projects
 - finishing projects

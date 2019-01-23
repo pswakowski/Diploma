@@ -10,7 +10,7 @@
             <th scope="col">Imię</th>
             <th scope="col">Nazwisko</th>
             <th scope="col">Zalogowany</th>
-            <th scope="col">Uptime</th>
+            <th scope="col">Czas pracy</th>
         </tr>
         </thead>
         <tbody>
@@ -26,9 +26,4 @@
         <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="card">
-        <div class="card-body">
-            <a href="users/add" class="btn btn-primary">Dodaj użytkownika</a>
-        </div>
-    </div>
 </div>
