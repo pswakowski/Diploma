@@ -54,8 +54,8 @@
 
         <?php foreach($viewModel['all_admins'] as $item) : ?>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="admin_id[]" id="exampleRadios1" value="<?php echo $item['id']; ?>"
-                    <?php if(Helpers::in_array_r($item['name'], $viewModel['admins'])) : ?>
+                <input class="form-check-input" type="checkbox" name="users_id[]" id="exampleRadios1" value="<?php echo $item['id']; ?>"
+                    <?php if(Helpers::in_array_r($item['id'], $viewModel['admins'])) : ?>
                         checked
                     <?php endif; ?>>
                 <label class="form-check-label" for="exampleRadios1">
@@ -67,8 +67,8 @@
         <h6>Pracownicy</h6>
         <?php foreach($viewModel['all_users'] as $item) : ?>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="admin_id[]" id="exampleRadios1" value="<?php echo $item['id']; ?>"
-                    <?php if(Helpers::in_array_r($item['name'], $viewModel['users'])) : ?>
+                <input class="form-check-input" type="checkbox" name="users_id[]" id="exampleRadios1" value="<?php echo $item['id']; ?>"
+                    <?php if(Helpers::in_array_r($item['id'], $viewModel['users'])) : ?>
                         checked
                     <?php endif; ?>>
                 <label class="form-check-label" for="exampleRadios1">

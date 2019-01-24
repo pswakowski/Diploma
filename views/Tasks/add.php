@@ -53,7 +53,7 @@
         <h6>Administracja</h6>
         <?php foreach($viewModel['admins'] as $item) : ?>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="admin_id<?php echo $item['admin_id'] ?>" id="exampleRadios1" value="1">
+            <input class="form-check-input" type="checkbox" name="users_id[]" value="<?php echo $item['admin_id'] ?>">
             <label class="form-check-label" for="exampleRadios1">
                 <?php echo $item['admin_name'] . ' ' . $item['admin_lastname'] ?>
             </label>
@@ -63,7 +63,7 @@
         <h6>Pracownicy</h6>
         <?php foreach($viewModel['users'] as $item) : ?>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="user_id<?php echo $item['user_id'] ?>" id="exampleRadios1" value="1">
+                <input class="form-check-input" type="checkbox" name="users_id[]" value="<?php echo $item['user_id'] ?>">
                 <label class="form-check-label" for="exampleRadios1">
                     <?php echo $item['user_name'] . ' ' . $item['user_lastname'] ?>
                 </label>

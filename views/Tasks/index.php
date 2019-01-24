@@ -17,13 +17,13 @@
         <tbody>
         <?php foreach($viewModel as $item) : ?>
             <tr class="table" <?php echo Helpers::isPast($item['end_date']); ?>>
-                <th scope="row"><?php echo $item['tasks_id']  ?></th>
-                <td><?php echo $item['tasks_name'] ?></td>
+                <th scope="row"><?php echo $item['id']  ?></th>
+                <td><?php echo $item['name'] ?></td>
                 <td><?php echo $item['projects_name']  ?></td>
                 <td><?php echo $item['start_date']  ?></td>
                 <td><?php echo $item['end_date']  ?></td>
                 <td><?php echo $item['users_name'] . ' ' . $item['users_lastname']  ?></td>
-                <td><a href="tasks/show/<?php echo $item['tasks_id']  ?>" class="btn btn-dark">Zobacz</a></td>
+                <td><a href="tasks/show/<?php echo $item['id']  ?>" class="btn btn-dark">Zobacz</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

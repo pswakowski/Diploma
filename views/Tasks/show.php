@@ -45,7 +45,7 @@
         <?php foreach($viewModel['all_admins'] as $item) : ?>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="admin_id[]" id="exampleRadios1" value="<?php echo $item['id']; ?>"
-                        <?php if(Helpers::in_array_r($item['name'], $viewModel['admins'])) : ?>
+                        <?php if(Helpers::in_array_r($item['id'], $viewModel['admins'])) : ?>
                             checked
                     <?php endif; ?> disabled>
                     <label class="form-check-label" for="exampleRadios1">
@@ -53,12 +53,14 @@
                     </label>
                 </div>
         <?php endforeach; ?>
+
         <br>
         <h6>Pracownicy</h6>
+
         <?php foreach($viewModel['all_users'] as $item) : ?>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="admin_id[]" id="exampleRadios1" value="<?php echo $item['id']; ?>"
-                    <?php if(Helpers::in_array_r($item['name'], $viewModel['users'])) : ?>
+                    <?php if(Helpers::in_array_r($item['id'], $viewModel['users'])) : ?>
                         checked
                     <?php endif; ?> disabled>
                 <label class="form-check-label" for="exampleRadios1">
@@ -66,6 +68,7 @@
                 </label>
             </div>
         <?php endforeach; ?>
+
         <hr>
         <a class="btn btn-warning" href="<?php ROOT_URL ?>/tasks/edit/<?php echo $viewModel['tasks']['id'] ?>">Edytuj zadanie</a>
         <br><br>
@@ -97,3 +100,8 @@
         </form>
     </div>
 </div>
+<pre>
+<!---->
+<!--    --><?php //print_r($viewModel['admins']); ?>
+<!--    --><?php //print_r($viewModel['all_admins']); ?>
+</pre>

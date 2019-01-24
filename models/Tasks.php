@@ -4,7 +4,13 @@ class TasksModel extends Model
 {
     public function index()
     {
-        $this->query("SELECT tasks.id as tasks_id, tasks.name as tasks_name, tasks.start_date, tasks.end_date, tasks.projects_id, tasks.users_id, projects.id as projects_id, projects.name as projects_name, users.name as users_name, users.lastname as users_lastname FROM tasks INNER JOIN projects ON tasks.projects_id = projects.id INNER JOIN users ON tasks.users_id = users.id WHERE tasks.status = '1' AND tasks.users_id = {$_SESSION['user_data']['id']}");
+        $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u2.name as users_name, u2.lastname as users_lastname, projects.name as projects_name
+                            FROM tasks
+                             JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
+                             JOIN users u1 ON u1.id = users_has_tasks.users_id
+                             JOIN projects ON tasks.projects_id = projects.id 
+                             JOIN users u2 ON tasks.users_id = u2.id 
+                             WHERE tasks.status = '1' AND u1.id = '{$_SESSION['user_data']['id']}'");
         $rows = $this->resultSet();
         return $rows;
     }
@@ -50,12 +56,19 @@ class TasksModel extends Model
 
             $this->execute();
 
-            // verify
-            if ($this->lastInsertId())
+            $task_id = $this->lastInsertId();
+
+            $users_array = $_POST['users_id'];
+            for ($i = 0; $i < count($users_array); $i++)
             {
-                Helpers::redirect('/tasks', 'Utworzyłeś nowe zadanie.', 'success');
+                $name = $users_array[$i];
+                $this->query("INSERT INTO users_has_tasks (users_id, tasks_id) VALUES (:users_id, :tasks_id)");
+                $this->bind(':users_id', $name);
+                $this->bind(':tasks_id', $task_id);
+                $this->execute();
             }
-            return;
+            // verify
+            Helpers::redirect('/tasks', 'Utworzyłeś nowe zadanie. o ID: ' . $task_id, 'success');
         }
         unset($_SESSION['posted']);
         return $data;
@@ -80,14 +93,15 @@ class TasksModel extends Model
                           INNER JOIN users ON users.id = notes.users_Id WHERE tasks_id = $id");
             $rows3['notes'] = $this->resultSet();
 
-            $this->query("SELECT tasks.name, users.email, users.name, users.lastname
+            // 4. All admins which have this task
+            $this->query("SELECT users.id, tasks.name, users.email, users.name, users.lastname
                             FROM tasks
                             INNER JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                             INNER JOIN users ON users.id = users_has_tasks.users_id
                             WHERE tasks.id = $id AND users.roles_id = 1");
             $rows4['admins'] = $this->resultSet();
 
-            $this->query("SELECT tasks.name, users.email, users.name, users.lastname
+            $this->query("SELECT users.id, tasks.name, users.email, users.name, users.lastname
                             FROM tasks
                             INNER JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                             INNER JOIN users ON users.id = users_has_tasks.users_id
@@ -146,14 +160,14 @@ class TasksModel extends Model
                           INNER JOIN users ON users.id = notes.users_Id WHERE tasks_id = $id");
             $rows3['notes'] = $this->resultSet();
 
-            $this->query("SELECT tasks.name, users.email, users.name, users.lastname
+            $this->query("SELECT users.id, tasks.name, users.email, users.name, users.lastname
                             FROM tasks
                             INNER JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                             INNER JOIN users ON users.id = users_has_tasks.users_id
                             WHERE tasks.id = $id AND users.roles_id = 1");
             $rows4['admins'] = $this->resultSet();
 
-            $this->query("SELECT tasks.name, users.email, users.name, users.lastname
+            $this->query("SELECT users.id, tasks.name, users.email, users.name, users.lastname
                             FROM tasks
                             INNER JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                             INNER JOIN users ON users.id = users_has_tasks.users_id
@@ -175,7 +189,6 @@ class TasksModel extends Model
             if($post['submit'])
             {
                 // Insert into DB
-
                 $this->query("UPDATE tasks SET name = :name, description = :description, end_date = :end_date, projects_id = :projects_id where id = $id");
 
                 $this->bind(':name', $post['name']);

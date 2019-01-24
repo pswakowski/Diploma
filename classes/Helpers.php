@@ -76,11 +76,21 @@ class Helpers
     {
         $date_now = new DateTime();
         $date_from_base = new DateTime($time);
+        $start_working_day = new DateTime("07:00:00");
         $end_working_day = new DateTime("18:00:00");
+
         if ($date_now > $end_working_day)
         {
-            return $end_working_day->diff($date_from_base)->format("%h godz. %i min. %s");
+            return $end_working_day->diff($date_from_base)->format("%h godz. %i min.");
         }
-        return $date_from_base->diff($date_now)->format("%h godz. %i min. %s");
+        else if ($date_now < $start_working_day)
+        {
+            $zero_hours = new DateTime("00:00:00");
+            return $zero_hours->format("H:i:s");
+        }
+        else
+        {
+            return $date_from_base->diff($date_now)->format("%h godz. %i min.");
+        }
     }
 }
