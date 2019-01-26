@@ -1,5 +1,6 @@
 <h1 class="h2">Pokaż projekt</h1>
 <hr>
+<?php Helpers::displayMessage(); ?>
 <div class="row" method="post">
     <div class="col">
         <div class="form-group">
@@ -15,6 +16,9 @@
             <input class="form-control" style="max-width: 260px; display: inline-block;" type="text" name="deadline" value="<?php echo $viewModel['end_date']; ?>" disabled>
         </div>
         <a class="btn btn-danger" href="<?php echo ROOT_URL; ?>/projects">Powrót</a>
+        <?php if ($_SESSION['user_data']['role'] != '2') : ?>
+            <a class="btn btn-warning" href="<?php ROOT_URL ?>/projects/edit/<?php echo $viewModel['id'] ?>">Edytuj zadanie</a>
+        <?php endif; ?>
     </div>
     <div class="col-sm-5">
 

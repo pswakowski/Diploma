@@ -25,7 +25,7 @@ class Projects extends Controller
     }
 
 
-    protected function show($id = 1)
+    protected function show()
     {
 
         if (!isset($_SESSION['is_logged']))
@@ -33,7 +33,23 @@ class Projects extends Controller
             header('Location:' . ROOT_URL . '/home/login');
         }
         $viewModel = new ProjectsModel();
-        $this->returnView($viewModel->show($id), true);
+        $this->returnView($viewModel->show(), true);
     }
 
+    protected function edit()
+    {
+
+        if (!isset($_SESSION['is_logged']))
+        {
+            header('Location:' . ROOT_URL . '/home/login');
+        }
+
+        if ($_SESSION['user_data']['role'] == '2')
+        {
+            Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
+        }
+
+        $viewModel = new ProjectsModel();
+        $this->returnView($viewModel->edit(), true);
+    }
 }

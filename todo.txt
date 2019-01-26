@@ -3,7 +3,6 @@
 - edit checkboxes to database (what if inserting a duplicate?)
 - delete multiple projects in combobox on tasks edit page
 - check working time 
-- edit projects
 - finishing projects
 - finishing tasks
 - Social media delete for admins

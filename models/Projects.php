@@ -70,4 +70,48 @@ class ProjectsModel extends Model
 
         header('Location:' . ROOT_URL . '/projects');
     }
+
+    public function edit()
+    {
+        $id = $_GET['id'];
+
+        if (isset($id) && $id != '')
+        {
+            $this->query("SELECT * FROM projects where id = $id");
+            $rows = $this->single();
+        }
+
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $rows2 = Array ($_POST['name'], $_POST['description'], $_POST['deadline'], $_POST['deadlinetime']);
+
+        $data = $rows2;
+
+        if($post['submit'])
+        {
+            if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['deadlinetime'] == '')
+            {
+                $_SESSION['posted'] = $data;
+                Helpers::redirect('/projects/add', 'Błąd! Nie uzupełniłes wszystkich danych!', 'error');
+                return $data;
+            }
+
+            $deadline = $post['deadline']. ' ' .$post['deadlinetime'];
+
+            // Insert into DB
+            $this->query("UPDATE projects set name = :name, description = :description, end_date = :end_date where id = $id");
+
+            $this->bind(':name', $post['name']);
+            $this->bind(':description', $post['description']);
+            $this->bind(':end_date', $deadline);
+
+            $this->execute();
+
+            // verify
+                Helpers::redirect('/projects/show/' . $id, 'Pomyślnie zaaktualizowałeś projekt.', 'success');
+                unset($_SESSION['posted']);
+            // TODO ATTACHMENTS
+        }
+        return $rows;
+    }
 }
