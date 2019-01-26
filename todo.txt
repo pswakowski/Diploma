@@ -1,14 +1,14 @@
 // todo list
 
+- edit redirects for logged users (workers)
 - edit checkboxes to database (what if inserting a duplicate?)
 - delete multiple projects in combobox on tasks edit page
-- check working time 
+- check working time
 - finishing projects
 - finishing tasks
-- Social media delete for admins
 - attachments for tasks (Documents)
 - Calendar (maybe js?)
 - settings stuff (statistics?)
 - milestones(?)
 
-deadline 24.01.19r.
+deadline 29.01.19r.

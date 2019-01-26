@@ -23,7 +23,7 @@ class TasksModel extends Model
         $this->query('SELECT users.id as admin_id, users.name as admin_name, users.lastname as admin_lastname FROM users where roles_id = 1');
         $rows2['admins'] = $this->resultSet();
 
-        $this->query('SELECT users.id as user_id, users.name as user_name, users.lastname as user_lastname FROM users where roles_id = 2');
+        $this->query('SELECT users.id as user_id, users.name as user_name, users.lastname as user_lastname FROM users where roles_id != 1');
         $rows3['users'] = $this->resultSet();
 
         $rows4 = Array ($_POST['name'], $_POST['description'], $_POST['deadline'], $_POST['deadlinetime']);
@@ -105,7 +105,7 @@ class TasksModel extends Model
                             FROM tasks
                             INNER JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                             INNER JOIN users ON users.id = users_has_tasks.users_id
-                            WHERE tasks.id = $id AND users.roles_id = 2");
+                            WHERE tasks.id = $id AND users.roles_id != 1");
             $rows5['users'] = $this->resultSet();
 
             $this->query("SELECT users.id, users.name, users.lastname FROM users where roles_id = 1");
@@ -171,7 +171,7 @@ class TasksModel extends Model
                             FROM tasks
                             INNER JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                             INNER JOIN users ON users.id = users_has_tasks.users_id
-                            WHERE tasks.id = $id AND users.roles_id = 2");
+                            WHERE tasks.id = $id AND users.roles_id != 1");
             $rows5['users'] = $this->resultSet();
 
             $this->query("SELECT users.id, users.name, users.lastname FROM users where roles_id = 1");

@@ -100,8 +100,3 @@
         </form>
     </div>
 </div>
-<pre>
-<!---->
-<!--    --><?php //print_r($viewModel['admins']); ?>
-<!--    --><?php //print_r($viewModel['all_admins']); ?>
-</pre>
