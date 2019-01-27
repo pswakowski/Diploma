@@ -3,7 +3,6 @@
 - edit redirects for logged users (workers)
 - edit checkboxes to database (what if inserting a duplicate?)
 - delete multiple projects in combobox on tasks edit page
-- check working time
 - finishing projects
 - finishing tasks
 - attachments for tasks (Documents)
