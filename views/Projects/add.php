@@ -1,8 +1,6 @@
 <h1 class="h2">Utwórz nowy projekt</h1>
 <hr>
-<?php Helpers::displayMessage();
-print_r($_SESSION);
-?>
+<?php Helpers::displayMessage(); ?>
 <form class="row" method="post">
     <div class="col">
         <div class="form-group">

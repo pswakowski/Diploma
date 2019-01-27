@@ -4,10 +4,16 @@ class Social extends Controller
 {
     protected function index()
     {
-        if (!isset($_SESSION['is_logged']) OR $_SESSION['user_data']['role'] != 1)
+        if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
+
+        if ($_SESSION['user_data']['role'] != '1')
+        {
+            Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
+        }
+
         $viewModel = new SocialModel();
         $this->returnView($viewModel->index(), true);
     }

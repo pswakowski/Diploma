@@ -6,19 +6,20 @@ class Tasks extends Controller
     {
         if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
+
         $viewModel = new TasksModel();
         $this->returnView($viewModel->index(), true);
-
     }
 
     protected function add()
     {
         if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
+
         $viewModel = new TasksModel();
         $this->returnView($viewModel->add(), true);
     }
@@ -27,8 +28,9 @@ class Tasks extends Controller
     {
         if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
+
         $viewModel = new TasksModel();
         $this->returnView($viewModel->show(), true);
     }
@@ -37,10 +39,15 @@ class Tasks extends Controller
     {
         if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
+
+        if ($_SESSION['user_data']['role'] == '2')
+        {
+            Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
+        }
+
         $viewModel = new TasksModel();
         $this->returnView($viewModel->edit(), true);
     }
-
 }

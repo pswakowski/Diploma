@@ -6,7 +6,7 @@ class Home extends Controller
     {
         if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
         $viewModel = new HomeModel();
         $this->returnView($viewModel->index(), true);

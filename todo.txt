@@ -1,12 +1,14 @@
 // todo list
 
-- edit redirects for logged users (workers)
 - edit checkboxes to database (what if inserting a duplicate?)
 - finishing projects
 - finishing tasks
-- attachments for tasks (Documents)
-- Calendar (maybe js?)
+- attachments for tasks (Documents) -> here
+- Calendar (maybe js?) -> http://www.lisenme.com/create-event-calendar-using-jquery-ajax-php/
 - settings stuff (statistics?)
 - milestones(?)
+
+// audyt
+- bind every query to db
 
 deadline 29.01.19r.

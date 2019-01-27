@@ -24,9 +24,11 @@
         <?php endforeach; ?>
         </tbody>
     </table>
+    <?php if ($_SESSION['user_data']['role'] != '2') : ?>
     <div class="card">
         <div class="card-body">
             <a href="projects/add" class="btn btn-primary">Dodaj projekt</a>
         </div>
     </div>
+    <?php endif; ?>
 </div>

@@ -4,30 +4,48 @@ class Users extends Controller
 {
     protected function Index()
     {
-        if (!isset($_SESSION['is_logged']) OR $_SESSION['user_data']['role'] != 1)
+        if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
+
+        if ($_SESSION['user_data']['role'] != '1')
+        {
+            Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
+        }
+
         $viewModel = new UserModel();
         $this->returnView($viewModel->index(), true);
     }
     
     protected function add()
     {
-        if (!isset($_SESSION['is_logged']) OR $_SESSION['user_data']['role'] != 1)
+        if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
+
+        if ($_SESSION['user_data']['role'] != '1')
+        {
+            Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
+        }
+
         $viewModel = new UserModel();
         $this->returnView($viewModel->add(), true);
     }
 
     protected function edit()
     {
-        if (!isset($_SESSION['is_logged']) OR $_SESSION['user_data']['role'] != 1)
+        if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
+
+        if ($_SESSION['user_data']['role'] != '1')
+        {
+            Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
+        }
+
         $viewModel = new UserModel();
         $this->returnView($viewModel->edit(), true);
     }
@@ -46,6 +64,16 @@ class Users extends Controller
 
     protected function inactive()
     {
+        if (!isset($_SESSION['is_logged']))
+        {
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
+        }
+
+        if ($_SESSION['user_data']['role'] != '1')
+        {
+            Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
+        }
+
         $id = $_GET['id'];
         $model = new UserModel();
         $model->query("UPDATE users set status = '0' where id = $id");
@@ -55,6 +83,16 @@ class Users extends Controller
 
     protected function active()
     {
+        if (!isset($_SESSION['is_logged']))
+        {
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
+        }
+
+        if ($_SESSION['user_data']['role'] != '1')
+        {
+            Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
+        }
+
         $id = $_GET['id'];
         $model = new UserModel();
         $model->query("UPDATE users set status = '1' where id = $id");

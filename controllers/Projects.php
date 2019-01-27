@@ -7,7 +7,7 @@ class Projects extends Controller
     {
         if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
         $viewModel = new ProjectsModel();
         $this->returnView($viewModel->index(), true);
@@ -18,8 +18,14 @@ class Projects extends Controller
     {
         if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
+
+        if ($_SESSION['user_data']['role'] == '2')
+        {
+            Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
+        }
+
         $viewModel = new ProjectsModel();
         $this->returnView($viewModel->add(), true);
     }
@@ -30,7 +36,7 @@ class Projects extends Controller
 
         if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
         $viewModel = new ProjectsModel();
         $this->returnView($viewModel->show(), true);
@@ -41,7 +47,7 @@ class Projects extends Controller
 
         if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
 
         if ($_SESSION['user_data']['role'] == '2')

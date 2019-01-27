@@ -6,7 +6,7 @@ class Calendar extends Controller
     {
         if (!isset($_SESSION['is_logged']))
         {
-            header('Location:' . ROOT_URL . '/home/login');
+            Helpers::redirect('/home/login', 'Nie jesteś zalogowany.' , 'error');
         }
         $viewModel = new CalendarModel();
         $this->returnView($viewModel->index(), true);

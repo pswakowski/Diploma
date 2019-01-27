@@ -70,8 +70,10 @@
         <?php endforeach; ?>
 
         <hr>
+        <?php if ($_SESSION['user_data']['role'] != '2') : ?>
         <a class="btn btn-warning" href="<?php ROOT_URL ?>/tasks/edit/<?php echo $viewModel['tasks']['id'] ?>">Edytuj zadanie</a>
-        <br><br>
+            <br><br>
+        <?php endif; ?>
         <input class="btn btn-danger" name="endtask" type="submit" value="Zakończ zadanie">
     </div>
 </div>
