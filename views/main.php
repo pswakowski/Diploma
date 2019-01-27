@@ -41,7 +41,17 @@
 <!--                <a href="--><?php //echo ROOT_URL; ?><!--/milestones"><span data-feather="star"></span> Kamienie milowe</a>-->
 <!--            </li>-->
             <li <?php if (strstr($_SERVER['REQUEST_URI'], '/projects')) echo 'class="active"'; ?>>
-                <a href="<?php echo ROOT_URL; ?>/projects"><span data-feather="package"></span> Projekty</a>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span data-feather="package"></span> Projekty
+                </a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="<?php echo ROOT_URL; ?>/projects">Trwające</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo ROOT_URL; ?>/projects/finished">Zakończone</a>
+                    </li>
+                </ul>
             </li>
             <li <?php if (strstr($_SERVER['REQUEST_URI'], '/calendar')) echo 'class="active"'; ?>>
                 <a href="<?php echo ROOT_URL; ?>/calendar"><span data-feather="calendar"></span> Kalendarz</a>

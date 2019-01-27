@@ -15,9 +15,10 @@
             <label class="my-1 mr-2" for="formGroupExampleInput2">Deadline</label>
             <input class="form-control" style="max-width: 260px; display: inline-block;" type="text" name="deadline" value="<?php echo $viewModel['end_date']; ?>" disabled>
         </div>
-        <a class="btn btn-danger" href="<?php echo ROOT_URL; ?>/projects">Powrót</a>
-        <?php if ($_SESSION['user_data']['role'] != '2') : ?>
-            <a class="btn btn-warning" href="<?php ROOT_URL ?>/projects/edit/<?php echo $viewModel['id'] ?>">Edytuj zadanie</a>
+        <a class="btn btn-primary" href="<?php echo ROOT_URL; ?>/projects">Powrót</a>
+        <?php if ($_SESSION['user_data']['role'] != '2' && $viewModel['status'] == '1') : ?>
+            <a class="btn btn-warning" href="<?php ROOT_URL ?>/projects/edit/<?php echo $viewModel['id'] ?>">Edytuj projekt</a>
+            <a class="btn btn-danger" href="<?php ROOT_URL ?>/projects/finish/<?php echo $viewModel['id'] ?>">Zakończ projekt</a>
         <?php endif; ?>
     </div>
     <div class="col-sm-5">

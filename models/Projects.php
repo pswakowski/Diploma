@@ -68,7 +68,6 @@ class ProjectsModel extends Model
             return $rows;
         }
 
-        header('Location:' . ROOT_URL . '/projects');
     }
 
     public function edit()
@@ -112,6 +111,13 @@ class ProjectsModel extends Model
                 unset($_SESSION['posted']);
             // TODO ATTACHMENTS
         }
+        return $rows;
+    }
+
+    public function finished()
+    {
+        $this->query("SELECT projects.id as projects_id, projects.name, projects.end_date, projects.author_id, users.id as user_id, users.name as user_name, users.lastname as user_lastname FROM projects INNER JOIN users ON projects.author_id = users.id WHERE projects.status = '0'");
+        $rows = $this->resultSet();
         return $rows;
     }
 }

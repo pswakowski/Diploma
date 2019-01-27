@@ -1,4 +1,4 @@
-<h1 class="h2">Projekty</h1>
+<h1 class="h2">Projekty zakończone</h1>
 <hr>
 <?php Helpers::displayMessage(); ?>
 <div class="table-responsive">
@@ -14,23 +14,22 @@
         </thead>
         <tbody>
         <?php foreach($viewModel as $item) : ?>
-            <tr class="table" <?php echo Helpers::isPast($item['end_date']); ?>>
+            <tr class="table">
                 <th scope="row"><?php echo $item['projects_id'];  ?></th>
                 <td><?php echo $item['name']; ?></td>
                 <td><?php echo $item['end_date'];  ?></td>
                 <td><?php echo $item['user_name'] . ' ' . $item['user_lastname'];  ?></td>
                 <td>
                     <a href="<?php echo ROOT_URL; ?>/projects/show/<?php echo $item['projects_id'];  ?>" class="btn btn-dark">Zobacz</a>
+                    <?php if ($_SESSION['user_data']['role'] != '2') : ?>
+                    <a href="<?php echo ROOT_URL; ?>/projects/rollback/<?php echo $item['projects_id']  ?>" class="btn btn-success">Przywróć</a>
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
-    <?php if ($_SESSION['user_data']['role'] != '2') : ?>
-    <div class="card">
-        <div class="card-body">
-            <a href="projects/add" class="btn btn-primary">Dodaj projekt</a>
-        </div>
-    </div>
-    <?php endif; ?>
 </div>
+<pre>
+    <?php //print_r($viewModel); ?>
+</pre>
