@@ -20,13 +20,17 @@
                 </div>
                 <div class="form-group">
                     <label class="my-1 mr-2" for="formGroupExampleInput2">Projekt</label>
-                    <select name="project_id" class="custom-select my-1 mr-sm-4" id="inlineFormCustomSelectPref">                                                                          <option value="<?php echo $viewModel['projects']['id']; ?>">
-                            <?php echo $viewModel['projects']['name']; ?>
-                    </option>
+                    <select name="project_id" class="custom-select my-1 mr-sm-4" id="inlineFormCustomSelectPref">
                     <?php foreach($viewModel['all_projects'] as $item) : ?>
-                        <option value="<?php echo $item['id']; ?>">
-                            <?php echo $item['name']; ?>
-                        </option>
+                        <?php if ($item['id'] == $viewModel['projects']['id']) : ?>
+                            <option value="<?php echo $viewModel['projects']['id']; ?>" selected>
+                                <?php echo $viewModel['projects']['name']; ?>
+                            </option>
+                        <?php else : ?>
+                            <option value="<?php echo $item['id']; ?>">
+                                <?php echo $item['name']; ?>
+                            </option>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                     </select>
                 </div>
@@ -79,5 +83,5 @@
     </div>
 </form>
 <pre>
-    <?php //print_r($viewModel) ?>
+    <?php print_r($viewModel) ?>
 </pre>

@@ -152,7 +152,7 @@ class TasksModel extends Model
             $this->query("SELECT projects.name, projects.id from tasks inner join projects on tasks.projects_id = projects.id where tasks.id = $id");
             $rows2['projects'] = $this->single();
 
-            $this->query("SELECT projects.name, projects.id from tasks inner join projects on tasks.projects_id = projects.id where projects.id != $id");
+            $this->query("SELECT projects.name, projects.id from projects");
             $rows21['all_projects'] = $this->resultSet();
 
             // 3. notes
