@@ -62,7 +62,7 @@ class TasksModel extends Model
             for ($i = 0; $i < count($users_array); $i++)
             {
                 $name = $users_array[$i];
-                $this->query("INSERT INTO users_has_tasks (users_id, tasks_id) VALUES (:users_id, :tasks_id)");
+                $this->query("INSERT IGNORE INTO users_has_tasks (users_id, tasks_id) VALUES (:users_id, :tasks_id)");
                 $this->bind(':users_id', $name);
                 $this->bind(':tasks_id', $task_id);
                 $this->execute();
@@ -198,6 +198,15 @@ class TasksModel extends Model
 
                 $this->execute();
 
+                $users_array = $_POST['users_id'];
+                for ($i = 0; $i < count($users_array); $i++)
+                {
+                    $name = $users_array[$i];
+                    $this->query("INSERT IGNORE INTO users_has_tasks (users_id, tasks_id) VALUES (:users_id, :tasks_id)");
+                    $this->bind(':users_id', $name);
+                    $this->bind(':tasks_id', $id);
+                    $this->execute();
+                }
                 // verify
                 Helpers::redirect('/tasks/show/' . $id, 'Zaktualizowałeś zadanie.', 'success');
             }

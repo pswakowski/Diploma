@@ -3,7 +3,6 @@
 - change the colors for tasks
 - projects % from tasks/ended tasks * 100
 - users which are in each projects
-- edit checkboxes to database (what if inserting a duplicate?) !important
 - finishing tasks
 - attachments for tasks (Documents) -> here
 - Calendar (maybe js?) -> http://www.lisenme.com/create-event-calendar-using-jquery-ajax-php/
