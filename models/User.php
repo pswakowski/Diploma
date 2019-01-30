@@ -75,11 +75,13 @@ class UserModel extends Model
                 Helpers::redirect('/users/edit/' . $id, 'Błąd! Nie uzupełniłeś wszystkich danych!', 'error');
             }
             // Insert into DB
-            $this->query("UPDATE users set email = :email, name = :name, lastname = :lastname where id = $id");
+            $this->query("UPDATE users set email = :email, name = :name, lastname = :lastname, roles_id = :roles_id where id = :id");
 
             $this->bind(':email', $post['email']);
             $this->bind(':name', $post['name']);
             $this->bind(':lastname', $post['lastname']);
+            $this->bind(':roles_id', $post['roles_id']);
+            $this->bind(':id', $id);
 
             $this->execute();
 
