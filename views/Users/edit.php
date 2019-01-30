@@ -13,8 +13,12 @@
                 <input type="text" name="lastname" class="form-control" value="<?php echo $viewModel['users']['lastname']; ?>" />
                 <label>Rola użytkownika: </label>
                 <select class="form-custom-select" name="roles_id">
-                    <?php foreach($viewModel['roles'] as $item) : ?>
-                        <option value="<?php echo $item['id'] ?>"><?php echo $item['name'] ?></option>
+                    <?php foreach($viewModel['all_roles'] as $item) : ?>
+                        <?php if ($item['id'] == $viewModel['roles']['id']) : ?>
+                            <option value="<?php echo $viewModel['roles']['id'] ?>" selected><?php echo $viewModel['roles']['name'] ?></option>
+                        <?php else : ?>
+                            <option value="<?php echo $item['id'] ?>"><?php echo $item['name'] ?></option>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
                 <br>

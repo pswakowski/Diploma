@@ -2,17 +2,37 @@
 
 class Helpers
 {
-    public static function isPast($time)
+    public static function project_is_past($time)
     {
-        $today = date("Y-m-d H:i:s");
-        $date = $time;
+        $today = new DateTime();
+        $date = new DateTime($time);
+
+        $interval = $today->diff($date);
+
+        if ($interval->days < 7)
+        {
+            $color = 'style="background-color: #f8d7da"';
+        } else if ($today > $date)
+        {
+            $color = 'style="background-color: #e2e3e5;"';
+        } else
+        {
+            $color = 'style="background-color: #d4edda;"';
+        }
+        return $color;
+    }
+
+    public static function task_is_past($time)
+    {
+        $today = new DateTime();
+        $date = new DateTime($time);
 
         if ($today > $date)
         {
-            $color = 'style="background-color: #FF6347;"';
+            $color = 'style="background-color: #e2e3e5;"';
         } else
         {
-            $color = 'style="background-color: #9ACD32;"';
+            $color = 'style="background-color: #d4edda;"';
         }
         return $color;
     }

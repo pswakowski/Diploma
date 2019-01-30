@@ -1,6 +1,5 @@
 // todo list
 
-- change the colors for tasks
 - projects % from tasks/ended tasks * 100
 - users which are in each projects
 - finishing tasks

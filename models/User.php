@@ -55,12 +55,15 @@ class UserModel extends Model
         if (isset($id) && $id != '')
         {
             $this->query("SELECT roles.id, roles.name, users.roles_id FROM roles INNER JOIN users ON users.roles_id = roles.id where users.id = $id");
-            $rows['roles'] = $this->resultSet();
+            $rows['roles'] = $this->single();
+
+            $this->query("SELECT roles.id, roles.name FROM roles");
+            $rows2['all_roles'] = $this->resultSet();
 
             $this->query("SELECT * FROM users where id = $id");
-            $rows2['users'] = $this->single();
+            $rows3['users'] = $this->single();
 
-            $data = array_merge($rows, $rows2);
+            $data = array_merge($rows, $rows2, $rows3);
         }
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
