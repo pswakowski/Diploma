@@ -74,7 +74,7 @@
         <a class="btn btn-warning" href="<?php ROOT_URL ?>/tasks/edit/<?php echo $viewModel['tasks']['id'] ?>">Edytuj zadanie</a>
             <br><br>
         <?php endif; ?>
-        <input class="btn btn-danger" name="endtask" type="submit" value="Zakończ zadanie">
+        <a class="btn btn-danger" href="<?php ROOT_URL ?>/tasks/finish/<?php echo $viewModel['tasks']['id'] ?>">Zakończ zadanie</a>
     </div>
 </div>
 <div class="row">

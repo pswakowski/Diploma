@@ -4,14 +4,15 @@ class TasksModel extends Model
 {
     public function index()
     {
-        $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u2.name as users_name, u2.lastname as users_lastname, projects.name as projects_name
+        $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u1.name AS users_name, u1.lastname AS users_lastname, u2.name as user_name, u2.lastname as user_lastname, projects.name as projects_name
                             FROM tasks
                              JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                              JOIN users u1 ON u1.id = users_has_tasks.users_id
                              JOIN projects ON tasks.projects_id = projects.id 
                              JOIN users u2 ON tasks.users_id = u2.id 
-                             WHERE tasks.status = '1' AND u1.id = '{$_SESSION['user_data']['id']}'");
+                             WHERE users_has_tasks.status = 1 AND u1.id = '{$_SESSION['user_data']['id']}'");
         $rows = $this->resultSet();
+
         return $rows;
     }
 
@@ -62,7 +63,7 @@ class TasksModel extends Model
             for ($i = 0; $i < count($users_array); $i++)
             {
                 $name = $users_array[$i];
-                $this->query("INSERT IGNORE INTO users_has_tasks (users_id, tasks_id) VALUES (:users_id, :tasks_id)");
+                $this->query("INSERT IGNORE INTO users_has_tasks (users_id, tasks_id, status) VALUES (:users_id, :tasks_id, 1)");
                 $this->bind(':users_id', $name);
                 $this->bind(':tasks_id', $task_id);
                 $this->execute();
@@ -212,5 +213,68 @@ class TasksModel extends Model
             }
         }
         return $data;
+    }
+
+    public function finished()
+    {
+        $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u2.name as users_name, u2.lastname as users_lastname, projects.name as projects_name
+                            FROM tasks
+                             JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
+                             JOIN users u1 ON u1.id = users_has_tasks.users_id
+                             JOIN projects ON tasks.projects_id = projects.id 
+                             JOIN users u2 ON tasks.users_id = u2.id 
+                             WHERE users_has_tasks.status = 0 AND u1.id = '{$_SESSION['user_data']['id']}'");
+        $rows['users'] = $this->resultSet();
+
+        $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u1.name AS verify_name, u1.lastname AS verify_lastname, u2.name AS users_name, u2.lastname AS users_lastname, projects.name AS projects_name
+                    FROM tasks
+                    JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
+                    JOIN users u1 ON u1.id = users_has_tasks.users_id
+                    JOIN projects ON tasks.projects_id = projects.id
+                    JOIN users u2 ON tasks.users_id = u2.id
+                    WHERE users_has_tasks.status = 0");
+        $rows2['admins'] = $this->resultSet();
+
+        $data = array_merge($rows, $rows2);
+
+        return $data;
+    }
+
+    public function verify()
+    {
+        $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u2.name as users_name, u2.lastname as users_lastname, projects.name as projects_name FROM tasks
+                             JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
+                             JOIN users u1 ON u1.id = users_has_tasks.users_id
+                             JOIN projects ON tasks.projects_id = projects.id 
+                             JOIN users u2 ON tasks.users_id = u2.id 
+                             WHERE users_has_tasks.status = 2 AND u1.id = '{$_SESSION['user_data']['id']}'");
+        $rows['users'] = $this->resultSet();
+
+        $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u1.name AS verify_name, u1.lastname AS verify_lastname, u2.name AS users_name, u2.lastname AS users_lastname, projects.name AS projects_name
+                    FROM tasks
+                    JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
+                    JOIN users u1 ON u1.id = users_has_tasks.users_id
+                    JOIN projects ON tasks.projects_id = projects.id
+                    JOIN users u2 ON tasks.users_id = u2.id
+                    WHERE users_has_tasks.status = 2");
+        $rows2['admins'] = $this->resultSet();
+
+        $data = array_merge($rows, $rows2);
+
+        return $data;
+    }
+
+    public function all()
+    {
+        $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u1.name AS users_name, u1.lastname AS users_lastname, u2.name as user_name, u2.lastname as user_lastname, projects.name as projects_name
+                            FROM tasks
+                             JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
+                             JOIN users u1 ON u1.id = users_has_tasks.users_id
+                             JOIN projects ON tasks.projects_id = projects.id 
+                             JOIN users u2 ON tasks.users_id = u2.id 
+                             WHERE users_has_tasks.status = 1 OR users_has_tasks.status = 2 ORDER BY tasks.id ASC");
+        $rows = $this->resultSet();
+
+        return $rows;
     }
 }

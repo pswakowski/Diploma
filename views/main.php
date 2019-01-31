@@ -35,16 +35,31 @@
                 <a href="<?php echo ROOT_URL; ?>/"><span data-feather="home"></span> Aktualności</a>
             </li>
             <li <?php if (strstr($_SERVER['REQUEST_URI'], '/tasks')) echo 'class="active"'; ?>>
-                <a href="<?php echo ROOT_URL; ?>/tasks"><span data-feather="list"></span> Zadania</a>
+                <a href="#tasksSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <span data-feather="list"></span> Zadania
+                </a>
+                <ul class="collapse list-unstyled" id="tasksSubmenu">
+                    <li>
+                        <a href="<?php echo ROOT_URL; ?>/tasks">Trwające</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo ROOT_URL; ?>/tasks/verify">Do weryfikacji</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo ROOT_URL; ?>/tasks/finished">Zakończone</a>
+                    </li>
+                    <?php if ($_SESSION['user_data']['role'] != '2') : ?>
+                        <li>
+                            <a href="<?php echo ROOT_URL; ?>/tasks/all">Wszystkie</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
             </li>
-<!--            <li --><?php //if (strstr($_SERVER['REQUEST_URI'], '/milestones')) echo 'class="active"'; ?>
-<!--                <a href="--><?php //echo ROOT_URL; ?><!--/milestones"><span data-feather="star"></span> Kamienie milowe</a>-->
-<!--            </li>-->
             <li <?php if (strstr($_SERVER['REQUEST_URI'], '/projects')) echo 'class="active"'; ?>>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <a href="#projectsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <span data-feather="package"></span> Projekty
                 </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
+                <ul class="collapse list-unstyled" id="projectsSubmenu">
                     <li>
                         <a href="<?php echo ROOT_URL; ?>/projects">Trwające</a>
                     </li>

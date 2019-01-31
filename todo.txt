@@ -1,8 +1,9 @@
 // todo list
 
+- check if things with tasks finishing are good so far
+- rollback and finish each tasks only for right users (now ending all tasks with the same id)
 - projects % from tasks/ended tasks * 100
 - users which are in each projects
-- finishing tasks
 - attachments for tasks (Documents) -> here
 - Calendar (maybe js?) -> http://www.lisenme.com/create-event-calendar-using-jquery-ajax-php/
 - settings stuff (statistics?)
