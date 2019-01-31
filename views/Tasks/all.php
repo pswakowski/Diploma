@@ -24,7 +24,7 @@
                 <td><?php echo $item['start_date']  ?></td>
                 <td><?php echo $item['end_date']  ?></td>
                 <td><?php echo $item['user_name'] . ' ' . $item['user_lastname']  ?></td>
-                <td><a href="tasks/show/<?php echo $item['id']  ?>" class="btn btn-dark">Zobacz</a></td>
+                <td><a href="/tasks/show/<?php echo $item['id']  ?>" class="btn btn-dark">Zobacz</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
