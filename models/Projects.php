@@ -4,8 +4,16 @@ class ProjectsModel extends Model
 {
     public function index()
     {
-        $this->query("SELECT projects.id as projects_id, projects.name, projects.end_date, projects.author_id, users.id as user_id, users.name as user_name, users.lastname as user_lastname FROM projects INNER JOIN users ON projects.author_id = users.id WHERE projects.status = '1'");
+        $this->query("SELECT projects.id as projects_id, projects.name, projects.end_date, projects.author_id, u1.id as user_id, u1.name as user_name, u1.lastname as user_lastname, count(*) as result, 
+	sum(case when users_has_tasks.status = '0' then 1 else 0 end) finished
+	FROM tasks JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id 
+        	JOIN users u1 ON u1.id = users_has_tasks.users_id 
+                JOIN projects ON tasks.projects_id = projects.id 
+                JOIN users u2 ON tasks.users_id = u2.id 
+                	group by projects.name order by projects.id asc");
+
         $rows = $this->resultSet();
+
         return $rows;
     }
 

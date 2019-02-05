@@ -120,4 +120,17 @@ class Helpers
             return $zero_hours->format("H:i:s");
         }
     }
+
+    public static function progress($finished, $all)
+    {
+        $result = ($finished / $all) * 100;
+
+        if ($result == 0.0)
+        {
+            return '0%';
+        } else
+        {
+            return $result . '%';
+        }
+    }
 }

@@ -1,6 +1,5 @@
 // todo list
 
-- projects % from tasks/ended tasks * 100
 - users which are in each projects
 - attachments for tasks (Documents) -> here
 - Calendar (maybe js?) -> http://www.lisenme.com/create-event-calendar-using-jquery-ajax-php/
@@ -9,5 +8,6 @@
 
 // audyt
 - bind every query to db
+- fix 0 in tasks rollback and end
 
 deadline 29.01.19r.

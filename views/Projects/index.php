@@ -9,6 +9,7 @@
             <th scope="col">Nazwa</th>
             <th scope="col">Deadline</th>
             <th scope="col">Opiekun</th>
+            <th scope="col">Postęp</th>
             <th scope="col">Akcje</th>
         </tr>
         </thead>
@@ -19,6 +20,7 @@
                 <td><?php echo $item['name']; ?></td>
                 <td><?php echo $item['end_date'];  ?></td>
                 <td><?php echo $item['user_name'] . ' ' . $item['user_lastname'];  ?></td>
+                <td><?php echo Helpers::progress($item['finished'], $item['result']); ?></td>
                 <td>
                     <a href="<?php echo ROOT_URL; ?>/projects/show/<?php echo $item['projects_id'];  ?>" class="btn btn-dark">Zobacz</a>
                 </td>
