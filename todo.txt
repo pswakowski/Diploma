@@ -1,6 +1,6 @@
 // todo list
 
-- check projects page (AUTHOR IS WRONG)
+- check projects page count
 - attachments for tasks (Documents) -> here
 - Calendar (maybe js?) -> http://www.lisenme.com/create-event-calendar-using-jquery-ajax-php/
 - settings stuff (statistics?)

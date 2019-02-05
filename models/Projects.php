@@ -10,7 +10,7 @@ class ProjectsModel extends Model
 	FROM tasks left JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id 
         	left JOIN users u1 ON u1.id = users_has_tasks.users_id 
                 JOIN projects ON tasks.projects_id = projects.id 
-                JOIN users u2 ON tasks.users_id = u2.id 
+                JOIN users u2 ON projects.author_id = u2.id 
                 	group by projects.name order by projects.id asc");
 
 //        $this->query("SELECT projects.id as projects_id, projects.name, projects.end_date, projects.author_id, u1.id as user_id, u1.name as user_name, u1.lastname as user_lastname,
