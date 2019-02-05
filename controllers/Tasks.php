@@ -81,12 +81,17 @@ class Tasks extends Controller
         }
 
         $id = $_GET['id'];
+        $pieces = explode("0", $id);
+        $task = $pieces[0];
+        $user = $pieces[1];
+
         $model = new TasksModel();
-        $model->query("UPDATE users_has_tasks set status = '1' where tasks_id = :id");
-        $model->bind(":id", $id);
+        $model->query("UPDATE users_has_tasks set status = '1' where tasks_id = :tasks_id and users_id = :users_id");
+        $model->bind(":tasks_id", $task);
+        $model->bind(":users_id", $user);
 
         $model->execute();
-        Helpers::redirect('/tasks', 'Przywróciłeś zadanie o ID: ' . $id . '.', 'success');
+        Helpers::redirect('/tasks', 'Przywróciłeś zadanie o ID: ' . $task . '.', 'success');
     }
 
     protected function end()
@@ -102,12 +107,17 @@ class Tasks extends Controller
         }
 
         $id = $_GET['id'];
+        $pieces = explode("0", $id);
+        $task = $pieces[0];
+        $user = $pieces[1];
+
         $model = new TasksModel();
-        $model->query("UPDATE users_has_tasks set status = '0' where tasks_id = :id");
-        $model->bind(":id", $id);
+        $model->query("UPDATE users_has_tasks set status = '0' where tasks_id = :tasks_id and users_id = :users_id");
+        $model->bind(":tasks_id", $task);
+        $model->bind(":users_id", $user);
 
         $model->execute();
-        Helpers::redirect('/tasks/finished', 'Zakończyłeś definitywnie zadanie o ID: ' . $id . '.', 'success');
+        Helpers::redirect('/tasks/finished', 'Zakończyłeś definitywnie zadanie o ID: ' . $task . '.', 'success');
     }
 
     protected function finished()

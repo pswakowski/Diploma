@@ -22,29 +22,29 @@
         <?php if ($_SESSION['user_data']['role'] != '2') : ?>
             <?php foreach($viewModel['admins'] as $item) : ?>
                 <tr class="table">
-                    <th scope="row"><?php echo $item['id']  ?></th>
-                    <td><?php echo $item['name'] ?></td>
-                    <td><?php echo $item['verify_name'] . ' ' . $item['verify_lastname']  ?></td>
+                    <th scope="row"><?php echo $item['id']; ?></th>
+                    <td><?php echo $item['name']; ?></td>
+                    <td><?php echo $item['verify_name'] . ' ' . $item['verify_lastname']; ?></td>
                     <td><?php echo $item['projects_name']  ?></td>
-                    <td><?php echo $item['end_date']  ?></td>
-                    <td><?php echo $item['users_name'] . ' ' . $item['users_lastname']  ?></td>
+                    <td><?php echo $item['end_date']; ?></td>
+                    <td><?php echo $item['users_name'] . ' ' . $item['users_lastname']; ?></td>
                     <td>
-                        <a href="show/<?php echo $item['id']  ?>" class="btn btn-dark">Zobacz</a>
-                        <a href="rollback/<?php echo $item['id']  ?>" class="btn btn-warning">Przywróć</a>
+                        <a href="show/<?php echo $item['id']; ?>" class="btn btn-dark">Zobacz</a>
+                        <a href="rollback/<?php echo $item['id'] . '0' . $item['verify_id'];  ?>" class="btn btn-warning">Przywróć</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         <?php else : ?>
             <?php foreach($viewModel['users'] as $item) : ?>
                 <tr class="table">
-                    <th scope="row"><?php echo $item['id']  ?></th>
-                    <td><?php echo $item['name'] ?></td>
-                    <td><?php echo $item['projects_name']  ?></td>
-                    <td><?php echo $item['start_date']  ?></td>
-                    <td><?php echo $item['end_date']  ?></td>
-                    <td><?php echo $item['users_name'] . ' ' . $item['users_lastname']  ?></td>
+                    <th scope="row"><?php echo $item['id']; ?></th>
+                    <td><?php echo $item['name']; ?></td>
+                    <td><?php echo $_SESSION['user_data']['name'] . ' ' . $_SESSION['user_data']['lastname']; ?></td>
+                    <td><?php echo $item['projects_name']; ?></td>
+                    <td><?php echo $item['end_date']; ?></td>
+                    <td><?php echo $item['users_name'] . ' ' . $item['users_lastname']; ?></td>
                     <td>
-                        <a href="show/<?php echo $item['id']  ?>" class="btn btn-dark">Zobacz</a>
+                        <a href="show/<?php echo $item['id']; ?>" class="btn btn-dark">Zobacz</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

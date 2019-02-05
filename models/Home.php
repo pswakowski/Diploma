@@ -50,6 +50,7 @@ class HomeModel extends Model
                 $_SESSION['user_data'] = array(
                     "id" => $row['id'],
                     "name" => $row['name'],
+                    "lastname" => $row['lastname'],
                     "role" => $row['roles_id'],
                 );
 
