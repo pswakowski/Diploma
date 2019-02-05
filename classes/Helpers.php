@@ -125,7 +125,9 @@ class Helpers
     {
         $result = ($finished / $all) * 100;
 
-        if ($result == 0.0)
+        if (is_nan($result)) {
+            return '0%';
+        } else if ($result == 0.0)
         {
             return '0%';
         } else

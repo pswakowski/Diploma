@@ -4,17 +4,37 @@ class ProjectsModel extends Model
 {
     public function index()
     {
-        $this->query("SELECT projects.id as projects_id, projects.name, projects.end_date, projects.author_id, u1.id as user_id, u1.name as user_name, u1.lastname as user_lastname, count(*) as result, 
-	sum(case when users_has_tasks.status = '0' then 1 else 0 end) finished
-	FROM tasks JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id 
-        	JOIN users u1 ON u1.id = users_has_tasks.users_id 
+        $this->query("SELECT projects.id as projects_id, projects.name, projects.end_date, projects.author_id, u2.id as user_id, u2.name as user_name, u2.lastname as user_lastname, 
+	sum(case when users_has_tasks.status = '0' then 1 else 0 end) finished,
+        sum(case when projects.status = '1' then 1 else 0 end) result
+	FROM tasks left JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id 
+        	left JOIN users u1 ON u1.id = users_has_tasks.users_id 
                 JOIN projects ON tasks.projects_id = projects.id 
                 JOIN users u2 ON tasks.users_id = u2.id 
                 	group by projects.name order by projects.id asc");
 
-        $rows = $this->resultSet();
+//        $this->query("SELECT projects.id as projects_id, projects.name, projects.end_date, projects.author_id, u1.id as user_id, u1.name as user_name, u1.lastname as user_lastname,
+//	sum(case when users_has_tasks.status = '0' then 1 else 0 end) finished,
+//        sum(case when projects.status = '1' then 1 else 0 end) result
+//	FROM tasks JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
+//        	JOIN users u1 ON u1.id = users_has_tasks.users_id
+//                JOIN projects ON tasks.projects_id = projects.id
+//                JOIN users u2 ON tasks.users_id = u2.id
+//                	group by projects.name order by projects.id asc");
 
-        return $rows;
+        $rows['projects'] = $this->resultSet();
+
+        $this->query("SELECT DISTINCT users.name, users.lastname, projects.id FROM users_has_tasks 
+	join tasks on users_has_tasks.tasks_id = tasks.id
+        join users on users_has_tasks.users_id = users.id 
+        join projects on tasks.projects_id = projects.id
+        where users.name = ALL (select name from users where id < 0)");
+
+        $rows2['users'] = $this->resultSet();
+
+        $data = array_merge($rows, $rows2);
+
+        return $data;
     }
 
     public function add ()

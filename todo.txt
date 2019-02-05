@@ -1,6 +1,6 @@
 // todo list
 
-- users which are in each projects
+- check projects page (AUTHOR IS WRONG)
 - attachments for tasks (Documents) -> here
 - Calendar (maybe js?) -> http://www.lisenme.com/create-event-calendar-using-jquery-ajax-php/
 - settings stuff (statistics?)
