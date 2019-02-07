@@ -5,7 +5,7 @@ class AttachmentsModel extends Model
     public function index()
     {
         $this->query("SELECT attachments.id, attachments.title, attachments.version, users.name, users.lastname FROM attachments 
-	join users on attachments.sender = users.id");
+	join users on attachments.sender = users.id where attachments.status = 1");
         $rows = $this->resultSet();
 
         if(isset($_POST['upload']))
@@ -24,7 +24,7 @@ class AttachmentsModel extends Model
                     move_uploaded_file($_FILES['file']['tmp_name'], $upload . $_FILES['file']['name']);
 
                     //$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                    $this->query("INSERT INTO attachments (title, sender, version) values (:title, :sender, current_timestamp)");
+                    $this->query("INSERT INTO attachments (title, sender, version, status) values (:title, :sender, current_timestamp, 1)");
 
                     $this->bind(":title", $_FILES['file']['name']);
                     $this->bind(":sender", $_SESSION['user_data']['id']);

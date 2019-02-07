@@ -32,14 +32,11 @@
                 </div>
             </div>
             <div class="col">
-                <label class="my-1 mr-2" for="formGroupExampleInput2">Załączniki</label>
-                <select name="attachment" class="custom-select" size="4" multiple>
-                    <option selected>Wybierz plik</option>
-                    <option value="1">dokumentacja.docx</option>
-                    <option value="2">dokumentacja2.docx</option>
-                    <option value="3">dokumentacja3.docx</option>
-                    <option value="4">dokumentacja3.docx</option>
-                    <option value="5">dokumentacja3.docx</option>
+                <label class="my-1 mr-2" for="formGroupExampleInput2">Dołącz załącznik:</label>
+                <select name="attachment[]" class="custom-select" size="4" multiple>
+                    <?php foreach($viewModel['attachments'] as $item) : ?>
+                        <option value="<?php echo $item['id'] ?>"><?php echo $item['title'] ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>

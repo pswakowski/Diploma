@@ -1,7 +1,7 @@
 // todo list
 
 - check projects page count
-- attachments for tasks (Documents) -> here
+- attachments for projects
 - Calendar (maybe js?) -> http://www.lisenme.com/create-event-calendar-using-jquery-ajax-php/
 - settings stuff (statistics?)
 - milestones(?)

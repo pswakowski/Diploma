@@ -25,15 +25,11 @@
                 </div>
             </div>
             <div class="col">
-                <label class="my-1 mr-2" for="formGroupExampleInput2">Załączniki</label>
-                <select class="custom-select" size="4" multiple disabled>
-                    <option>Wybierz plik</option>
-                    <option value="1">dokumentacja.docx</option>
-                    <option value="1" selected>dokumentacja2.docx</option>
-                    <option value="1">dokumentacja3.docx</option>
-                    <option value="1">dokumentacja3.docx</option>
-                    <option value="1">dokumentacja3.docx</option>
-                </select>
+                <label class="my-1 mr-2" for="formGroupExampleInput2">Dołączone załączniki</label>
+                <br>
+                    <?php foreach($viewModel['attachments'] as $item) : ?>
+                        <a href="<?php ROOT_URL ?>/assets/attachments/<?php echo $item['title'] ?>" download><span data-feather="download"></span> <?php echo $item['title'] ?></a><br>
+                    <?php endforeach; ?>
             </div>
         </div>
     </div>

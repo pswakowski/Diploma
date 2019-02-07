@@ -20,7 +20,7 @@
                 <td><?php echo $item['name'] . ' ' . $item['lastname'];  ?></td>
                 <td><?php echo $item['version'];  ?></td>
                 <td>
-                    <a href="<?php echo ROOT_URL; ?>/delete/<?php echo $item['id'];  ?>" class="btn btn-danger">Usuń</a>
+                    <a href="<?php echo ROOT_URL; ?>/attachments/delete/<?php echo $item['id'];  ?>" class="btn btn-danger">Usuń</a>
                 </td>
             </tr>
         <?php endforeach; ?>

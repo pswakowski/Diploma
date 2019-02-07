@@ -85,7 +85,7 @@
                 <a href="<?php echo ROOT_URL; ?>/social"><span data-feather="message-circle"></span> Social media</a>
             </li>
             <li <?php if (strstr($_SERVER['REQUEST_URI'], '/attachments')) echo 'class="active"'; ?>>
-                <a href="<?php echo ROOT_URL; ?>/attachments"><span data-feather="layers"></span> Dokumenty</a>
+                <a href="<?php echo ROOT_URL; ?>/attachments"><span data-feather="file"></span> Dokumenty</a>
             </li>
             <li <?php if (strstr($_SERVER['REQUEST_URI'], '/settings')) echo 'class="active"'; ?>>
                 <a href="<?php echo ROOT_URL; ?>/settings"><span data-feather="settings"></span> Ustawienia</a>

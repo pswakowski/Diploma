@@ -27,7 +27,8 @@ class TasksModel extends Model
         $this->query('SELECT users.id as user_id, users.name as user_name, users.lastname as user_lastname FROM users where roles_id != 1');
         $rows3['users'] = $this->resultSet();
 
-        $rows4 = Array ($_POST['name'], $_POST['description'], $_POST['deadline'], $_POST['deadlinetime']);
+        $this->query('SELECT attachments.id, attachments.title from attachments where attachments.status = 1');
+        $rows4['attachments'] = $this->resultSet();
 
         $data = array_merge($rows, $rows2, $rows3, $rows4);
 
@@ -39,9 +40,8 @@ class TasksModel extends Model
 
         if($post['submit'])
         {
-            if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['project_id'] == '' || $post['attachment[]'] == 'Wybierz plik')
+            if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['project_id'] == '')
             {
-                $_SESSION['posted'] = $post;
                 Helpers::redirect('/tasks/add','Błąd! Nie uzupełniłes wszystkich danych!', 'error');
                 return $data;
             }
@@ -68,6 +68,17 @@ class TasksModel extends Model
                 $this->bind(':tasks_id', $task_id);
                 $this->execute();
             }
+
+            $attachments_array = $_POST['attachment'];
+            for ($i = 0; $i < count($attachments_array); $i++)
+            {
+                $attachment = $attachments_array[$i];
+                $this->query("INSERT IGNORE INTO tasks_has_attachment (tasks_id, attachments_id) VALUES (:tasks_id, :attachments_id)");
+                $this->bind(':tasks_id', $task_id);
+                $this->bind(':attachments_id', $attachment);
+                $this->execute();
+            }
+
             // verify
             Helpers::redirect('/tasks', 'Utworzyłeś nowe zadanie. o ID: ' . $task_id, 'success');
         }
@@ -115,7 +126,11 @@ class TasksModel extends Model
             $this->query("SELECT users.id, users.name, users.lastname FROM users where roles_id = 2 or roles_id = 3");
             $rows7['all_users'] = $this->resultSet();
 
-            $data = array_merge($rows, $rows2, $rows3, $rows4, $rows5, $rows6, $rows7);
+            $this->query("select attachments.id, attachments.title, tasks_has_attachment.tasks_id from tasks_has_attachment inner join attachments on attachments.id = tasks_has_attachment.attachments_id where tasks_id = :id and attachments.status = 1");
+            $this->bind(":id", $id);
+            $rows8['attachments'] = $this->resultSet();
+
+            $data = array_merge($rows, $rows2, $rows3, $rows4, $rows5, $rows6, $rows7, $rows8);
 
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -181,7 +196,14 @@ class TasksModel extends Model
             $this->query("SELECT users.id, users.name, users.lastname FROM users where roles_id = 2 or roles_id = 3");
             $rows7['all_users'] = $this->resultSet();
 
-            $data = array_merge($rows, $rows2, $rows3, $rows4, $rows5, $rows6, $rows7, $rows21);
+            $this->query("select attachments.id, attachments.title, tasks_has_attachment.tasks_id from tasks_has_attachment inner join attachments on attachments.id = tasks_has_attachment.attachments_id where tasks_id = :id and attachments.status = 1");
+            $this->bind(":id", $id);
+            $rows8['attachments'] = $this->resultSet();
+
+            $this->query('SELECT attachments.id, attachments.title from attachments where attachments.status = 1');
+            $rows9['all_attachments'] = $this->resultSet();
+
+            $data = array_merge($rows, $rows2, $rows3, $rows4, $rows5, $rows6, $rows7, $rows8, $rows9, $rows21);
 
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
@@ -206,6 +228,16 @@ class TasksModel extends Model
                     $this->query("INSERT IGNORE INTO users_has_tasks (users_id, tasks_id) VALUES (:users_id, :tasks_id)");
                     $this->bind(':users_id', $name);
                     $this->bind(':tasks_id', $id);
+                    $this->execute();
+                }
+
+                $attachments_array = $_POST['attachment'];
+                for ($i = 0; $i < count($attachments_array); $i++)
+                {
+                    $attachment = $attachments_array[$i];
+                    $this->query("INSERT IGNORE INTO tasks_has_attachment (tasks_id, attachments_id) VALUES (:tasks_id, :attachments_id)");
+                    $this->bind(':tasks_id', $id);
+                    $this->bind(':attachments_id', $attachment);
                     $this->execute();
                 }
                 // verify

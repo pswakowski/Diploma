@@ -4,7 +4,7 @@
 <div class="table-responsive">
     <form method="post">
         <h5>Dodaj nowy wpis <input type="submit" name="send" style="padding: 2px 8px 0 7px;" class="btn btn-primary" value="Wyślij&rarr;"></h5>
-        <textarea rows="4" class="form-control" name="input-sm" placeholder="Co slychac?"></textarea>
+        <textarea rows="4" class="form-control" name="input-sm" placeholder="Co słychać?"></textarea>
     </form>
 
     <div class="my-3 p-3 bg-white rounded box-shadow">
