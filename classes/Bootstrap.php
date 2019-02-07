@@ -7,7 +7,6 @@ class Bootstrap
 {
     private $controller;
     private $action;
-    private $id;
     private $request;
 
     public function __construct($request)

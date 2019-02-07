@@ -18,6 +18,7 @@ require ('controllers/Projects.php');
 require ('controllers/Calendar.php');
 require ('controllers/Records.php');
 require ('controllers/Social.php');
+require ('controllers/Attachments.php');
 
 // include models
 require ('models/User.php');
@@ -27,12 +28,15 @@ require ('models/Projects.php');
 require ('models/Calendar.php');
 require ('models/Records.php');
 require ('models/Social.php');
+require ('models/Attachments.php');
 
 
 $bootstrap = new Bootstrap($_GET);
 
-$controller = $bootstrap->createController();
-
+if (!strstr($_SERVER['REQUEST_URI'], 'assets'))
+{
+    $controller = $bootstrap->createController();
+}
 if ($controller)
 {
     $controller->executeAction();
