@@ -7,20 +7,12 @@ class ProjectsModel extends Model
         $this->query("SELECT projects.id as projects_id, projects.name, projects.end_date, projects.author_id, u2.id as user_id, u2.name as user_name, u2.lastname as user_lastname, 
 	sum(case when users_has_tasks.status = '0' then 1 else 0 end) finished,
         sum(case when projects.status = '1' then 1 else 0 end) result
-	FROM tasks left JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id 
-        	left JOIN users u1 ON u1.id = users_has_tasks.users_id 
-                JOIN projects ON tasks.projects_id = projects.id 
-                JOIN users u2 ON projects.author_id = u2.id 
+	FROM tasks right JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id 
+        	right JOIN users u1 ON u1.id = users_has_tasks.users_id 
+                right JOIN projects ON tasks.projects_id = projects.id 
+                 JOIN users u2 ON projects.author_id = u2.id 
+                 	where projects.status = '1'
                 	group by projects.name order by projects.id asc");
-
-//        $this->query("SELECT projects.id as projects_id, projects.name, projects.end_date, projects.author_id, u1.id as user_id, u1.name as user_name, u1.lastname as user_lastname,
-//	sum(case when users_has_tasks.status = '0' then 1 else 0 end) finished,
-//        sum(case when projects.status = '1' then 1 else 0 end) result
-//	FROM tasks JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
-//        	JOIN users u1 ON u1.id = users_has_tasks.users_id
-//                JOIN projects ON tasks.projects_id = projects.id
-//                JOIN users u2 ON tasks.users_id = u2.id
-//                	group by projects.name order by projects.id asc");
 
         $rows['projects'] = $this->resultSet();
 
@@ -76,13 +68,15 @@ class ProjectsModel extends Model
             $project_id = $this->lastInsertId();
 
             $attachments_array = $_POST['attachment'];
-            for ($i = 0; $i < count($attachments_array); $i++)
+            if(isset($attachments_array))
             {
-                $attachment = $attachments_array[$i];
-                $this->query("INSERT IGNORE INTO projects_has_attachment (projects_id, attachments_id) VALUES (:projects_id, :attachments_id)");
-                $this->bind(':projects_id', $project_id);
-                $this->bind(':attachments_id', $attachment);
-                $this->execute();
+                for ($i = 0; $i < count($attachments_array); $i++) {
+                    $attachment = $attachments_array[$i];
+                    $this->query("INSERT IGNORE INTO projects_has_attachment (projects_id, attachments_id) VALUES (:projects_id, :attachments_id)");
+                    $this->bind(':projects_id', $project_id);
+                    $this->bind(':attachments_id', $attachment);
+                    $this->execute();
+                }
             }
 
             Helpers::redirect('/projects', 'Utworzyłeś nowy projekt o ID: ' . $project_id .'.', 'success');
@@ -150,13 +144,16 @@ class ProjectsModel extends Model
             $this->execute();
 
             $attachments_array = $_POST['attachment'];
-            for ($i = 0; $i < count($attachments_array); $i++)
+
+            if(isset($attachments_array))
             {
-                $attachment = $attachments_array[$i];
-                $this->query("INSERT IGNORE INTO projects_has_attachment (projects_id, attachments_id) VALUES (:projects_id, :attachments_id)");
-                $this->bind(':projects_id', $id);
-                $this->bind(':attachments_id', $attachment);
-                $this->execute();
+                for ($i = 0; $i < count($attachments_array); $i++) {
+                    $attachment = $attachments_array[$i];
+                    $this->query("INSERT IGNORE INTO projects_has_attachment (projects_id, attachments_id) VALUES (:projects_id, :attachments_id)");
+                    $this->bind(':projects_id', $id);
+                    $this->bind(':attachments_id', $attachment);
+                    $this->execute();
+                }
             }
 
             Helpers::redirect('/projects/show/' . $id, 'Pomyślnie zaaktualizowałeś projekt.', 'success');

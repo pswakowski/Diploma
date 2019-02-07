@@ -18,7 +18,7 @@ class TasksModel extends Model
 
     public function add()
     {
-        $this->query('SELECT projects.id as project_id, projects.name as project_name FROM projects');
+        $this->query("SELECT projects.id as project_id, projects.name as project_name FROM projects where status = '1'");
         $rows['projects'] = $this->resultSet();
 
         $this->query('SELECT users.id as admin_id, users.name as admin_name, users.lastname as admin_lastname FROM users where roles_id = 1');
@@ -40,10 +40,9 @@ class TasksModel extends Model
 
         if($post['submit'])
         {
-            if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['project_id'] == '')
+            if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['project_id'] == '' || $post['users_id'] == '')
             {
                 Helpers::redirect('/tasks/add','Błąd! Nie uzupełniłes wszystkich danych!', 'error');
-                return $data;
             }
 
             // Insert into DB
@@ -70,13 +69,17 @@ class TasksModel extends Model
             }
 
             $attachments_array = $_POST['attachment'];
-            for ($i = 0; $i < count($attachments_array); $i++)
+
+            if(isset($attachments_array))
             {
-                $attachment = $attachments_array[$i];
-                $this->query("INSERT IGNORE INTO tasks_has_attachment (tasks_id, attachments_id) VALUES (:tasks_id, :attachments_id)");
-                $this->bind(':tasks_id', $task_id);
-                $this->bind(':attachments_id', $attachment);
-                $this->execute();
+                for ($i = 0; $i < count($attachments_array); $i++)
+                {
+                    $attachment = $attachments_array[$i];
+                    $this->query("INSERT IGNORE INTO tasks_has_attachment (tasks_id, attachments_id) VALUES (:tasks_id, :attachments_id)");
+                    $this->bind(':tasks_id', $task_id);
+                    $this->bind(':attachments_id', $attachment);
+                    $this->execute();
+                }
             }
 
             // verify
@@ -148,7 +151,6 @@ class TasksModel extends Model
                 {
                     Helpers::redirect('/tasks/show/' . $id, 'Dodałes nowy komentarz.', 'success');
                 }
-                return;
             }
         }
         return $data;
@@ -168,7 +170,7 @@ class TasksModel extends Model
             $this->query("SELECT projects.name, projects.id from tasks inner join projects on tasks.projects_id = projects.id where tasks.id = $id");
             $rows2['projects'] = $this->single();
 
-            $this->query("SELECT projects.name, projects.id from projects");
+            $this->query("SELECT projects.name, projects.id from projects where status = '1'");
             $rows21['all_projects'] = $this->resultSet();
 
             // 3. notes
@@ -232,13 +234,17 @@ class TasksModel extends Model
                 }
 
                 $attachments_array = $_POST['attachment'];
-                for ($i = 0; $i < count($attachments_array); $i++)
+
+                if(isset($attachments_array))
                 {
-                    $attachment = $attachments_array[$i];
-                    $this->query("INSERT IGNORE INTO tasks_has_attachment (tasks_id, attachments_id) VALUES (:tasks_id, :attachments_id)");
-                    $this->bind(':tasks_id', $id);
-                    $this->bind(':attachments_id', $attachment);
-                    $this->execute();
+                    for ($i = 0; $i < count($attachments_array); $i++)
+                    {
+                        $attachment = $attachments_array[$i];
+                        $this->query("INSERT IGNORE INTO tasks_has_attachment (tasks_id, attachments_id) VALUES (:tasks_id, :attachments_id)");
+                        $this->bind(':tasks_id', $id);
+                        $this->bind(':attachments_id', $attachment);
+                        $this->execute();
+                    }
                 }
                 // verify
                 Helpers::redirect('/tasks/show/' . $id, 'Zaktualizowałeś zadanie.', 'success');

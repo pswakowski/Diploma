@@ -125,14 +125,14 @@ class Helpers
     {
         $result = ($finished / $all) * 100;
 
-        if (is_nan($result)) {
+        if (is_nan($result) OR is_infinite($result)) {
             return '0%';
         } else if ($result == 0.0)
         {
             return '0%';
         } else
         {
-            return $result . '%';
+            return round($result, 2) . '%';
         }
     }
 }
