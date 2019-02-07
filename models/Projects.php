@@ -42,21 +42,21 @@ class ProjectsModel extends Model
         $this->query('SELECT * FROM attachments');
         $rows = $this->resultSet();
 
+        $this->query('SELECT attachments.id, attachments.title from attachments where attachments.status = 1');
+        $rows2['attachments'] = $this->resultSet();
+
         // Sanitizing POST
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-        $rows2 = Array ($_POST['name'], $_POST['description'], $_POST['deadline'], $_POST['deadlinetime']);
 
-        $data = $rows2;
+        $data = array_merge($rows, $rows2);
 
         if($post['submit'])
         {
             if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['deadlinetime'] == '')
             {
-                $_SESSION['posted'] = $data;
                 Helpers::redirect('/projects/add', 'Błąd! Nie uzupełniłes wszystkich danych!', 'error');
-                return $data;
             }
 
             $deadline = $post['deadline']. ' ' .$post['deadlinetime'];
@@ -72,16 +72,21 @@ class ProjectsModel extends Model
             $this->execute();
 
             // verify
-            if ($this->lastInsertId())
+
+            $project_id = $this->lastInsertId();
+
+            $attachments_array = $_POST['attachment'];
+            for ($i = 0; $i < count($attachments_array); $i++)
             {
-                Helpers::redirect('/projects', 'Utworzyłeś nowy projekt.', 'success');
-                unset($_SESSION['posted']);
+                $attachment = $attachments_array[$i];
+                $this->query("INSERT IGNORE INTO projects_has_attachment (projects_id, attachments_id) VALUES (:projects_id, :attachments_id)");
+                $this->bind(':projects_id', $project_id);
+                $this->bind(':attachments_id', $attachment);
+                $this->execute();
             }
-            return;
 
-            // TODO ATTACHMENTS
+            Helpers::redirect('/projects', 'Utworzyłeś nowy projekt o ID: ' . $project_id .'.', 'success');
         }
-
         return $data;
     }
 
@@ -92,8 +97,15 @@ class ProjectsModel extends Model
         if (isset($id) && $id != '')
         {
             $this->query("SELECT * FROM projects where id = $id");
-            $rows = $this->single();
-            return $rows;
+            $rows['projects'] = $this->single();
+
+            $this->query("select attachments.id, attachments.title, projects_has_attachment.projects_id from projects_has_attachment inner join attachments on attachments.id = projects_has_attachment.attachments_id where projects_id = :id and attachments.status = 1");
+            $this->bind(":id", $id);
+            $rows2['attachments'] = $this->resultSet();
+
+            $data = array_merge($rows, $rows2);
+
+            return $data;
         }
 
     }
@@ -105,22 +117,25 @@ class ProjectsModel extends Model
         if (isset($id) && $id != '')
         {
             $this->query("SELECT * FROM projects where id = $id");
-            $rows = $this->single();
+            $rows['projects'] = $this->single();
+
+            $this->query("select attachments.id, attachments.title from projects_has_attachment inner join attachments on attachments.id = projects_has_attachment.attachments_id where projects_id = :id and attachments.status = 1");
+            $this->bind(":id", $id);
+            $rows2['attachments'] = $this->resultSet();
+
+            $this->query('SELECT attachments.id, attachments.title from attachments where attachments.status = 1');
+            $rows3['all_attachments'] = $this->resultSet();
         }
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-        $rows2 = Array ($_POST['name'], $_POST['description'], $_POST['deadline'], $_POST['deadlinetime']);
-
-        $data = $rows2;
+        $data = array_merge($rows, $rows2, $rows3);
 
         if($post['submit'])
         {
             if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['deadlinetime'] == '')
             {
-                $_SESSION['posted'] = $data;
                 Helpers::redirect('/projects/add', 'Błąd! Nie uzupełniłes wszystkich danych!', 'error');
-                return $data;
             }
 
             $deadline = $post['deadline']. ' ' .$post['deadlinetime'];
@@ -134,12 +149,19 @@ class ProjectsModel extends Model
 
             $this->execute();
 
-            // verify
-                Helpers::redirect('/projects/show/' . $id, 'Pomyślnie zaaktualizowałeś projekt.', 'success');
-                unset($_SESSION['posted']);
-            // TODO ATTACHMENTS
+            $attachments_array = $_POST['attachment'];
+            for ($i = 0; $i < count($attachments_array); $i++)
+            {
+                $attachment = $attachments_array[$i];
+                $this->query("INSERT IGNORE INTO projects_has_attachment (projects_id, attachments_id) VALUES (:projects_id, :attachments_id)");
+                $this->bind(':projects_id', $id);
+                $this->bind(':attachments_id', $attachment);
+                $this->execute();
+            }
+
+            Helpers::redirect('/projects/show/' . $id, 'Pomyślnie zaaktualizowałeś projekt.', 'success');
         }
-        return $rows;
+        return $data;
     }
 
     public function finished()

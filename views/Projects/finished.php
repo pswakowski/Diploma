@@ -30,6 +30,3 @@
         </tbody>
     </table>
 </div>
-<pre>
-    <?php //print_r($viewModel); ?>
-</pre>

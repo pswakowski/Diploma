@@ -24,13 +24,10 @@
     <div class="col-sm-5">
 
         <h5>Załączniki:</h5>
-        <select style="max-width: 400px;" class="custom-select" size="6" name="attachment[]" multiple>
-            <option selected>Wybierz plik</option>
-            <option value="1">dokumentacja.docx</option>
-            <option value="2">dokumentacja2.docx</option>
-            <option value="3">dokumentacja3.docx</option>
-            <option value="4">dokumentacja3.docx</option>
-            <option value="5">dokumentacja3.docx</option>
+        <select style="max-width: 400px;" name="attachment[]" class="custom-select" size="4" multiple>
+            <?php foreach($viewModel['attachments'] as $item) : ?>
+                <option value="<?php echo $item['id'] ?>"><?php echo $item['title'] ?></option>
+            <?php endforeach; ?>
         </select>
     </div>
 </form>
