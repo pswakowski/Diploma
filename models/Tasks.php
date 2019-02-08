@@ -261,7 +261,7 @@ class TasksModel extends Model
                              JOIN users u1 ON u1.id = users_has_tasks.users_id
                              JOIN projects ON tasks.projects_id = projects.id 
                              JOIN users u2 ON tasks.users_id = u2.id 
-                             WHERE users_has_tasks.status = 0 AND u1.id = '{$_SESSION['user_data']['id']}'");
+                             WHERE users_has_tasks.status = 0 AND u1.id = '{$_SESSION['user_data']['id']}' order by tasks.id asc");
         $rows['users'] = $this->resultSet();
 
         $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u1.id as verify_id, u1.name AS verify_name, u1.lastname AS verify_lastname, u2.name AS users_name, u2.lastname AS users_lastname, projects.name AS projects_name
@@ -270,7 +270,7 @@ class TasksModel extends Model
                     JOIN users u1 ON u1.id = users_has_tasks.users_id
                     JOIN projects ON tasks.projects_id = projects.id
                     JOIN users u2 ON tasks.users_id = u2.id
-                    WHERE users_has_tasks.status = 0");
+                    WHERE users_has_tasks.status = 0 order by tasks.id asc");
         $rows2['admins'] = $this->resultSet();
 
         $data = array_merge($rows, $rows2);

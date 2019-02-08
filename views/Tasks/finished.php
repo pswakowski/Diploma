@@ -30,7 +30,7 @@
                     <td><?php echo $item['users_name'] . ' ' . $item['users_lastname']; ?></td>
                     <td>
                         <a href="show/<?php echo $item['id']; ?>" class="btn btn-dark">Zobacz</a>
-                        <form method="post" action="rollback">
+                        <form method="post" action="rollback" style="display:inline;">
                             <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
                             <input type="hidden" name="u" value="<?php echo $item['verify_id'] ?>">
                             <input type="submit" class="btn btn-warning" value="Przywróć">
