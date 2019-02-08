@@ -1,0 +1,23 @@
+* walidacja formualrzy
+* update 
+* delete
+* show projects/ tasks
+
+admini
+* social media -> delete
+* ewidencja czasu pracy
+* dokumenty (zalaczniki)
+
+
+szmery bajery
+* kolorwowanie listy projektow/ zadan
+* milestones
+* zalaczniki
+* logi
+* 
+
+
+Do not confuse my personality with my attitude...
+
+My personality is who I am;
+My attitude depends on who YOU are... ;)

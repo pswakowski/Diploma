@@ -80,10 +80,8 @@ class Tasks extends Controller
             Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
         }
 
-        $id = $_GET['id'];
-        $pieces = explode("0", $id);
-        $task = $pieces[0];
-        $user = $pieces[1];
+        $task = $_POST['id'];
+        $user = $_POST['u'];
 
         $model = new TasksModel();
         $model->query("UPDATE users_has_tasks set status = '1' where tasks_id = :tasks_id and users_id = :users_id");
@@ -106,10 +104,8 @@ class Tasks extends Controller
             Helpers::redirect('/', 'Nie masz odpowiedniego dostępu!', 'error');
         }
 
-        $id = $_GET['id'];
-        $pieces = explode("0", $id);
-        $task = $pieces[0];
-        $user = $pieces[1];
+        $task = $_POST['id'];
+        $user = $_POST['u'];
 
         $model = new TasksModel();
         $model->query("UPDATE users_has_tasks set status = '0' where tasks_id = :tasks_id and users_id = :users_id");

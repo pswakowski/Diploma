@@ -30,8 +30,16 @@
                     <td><?php echo $item['users_name'] . ' ' . $item['users_lastname']; ?></td>
                     <td>
                         <a href="show/<?php echo $item['id']; ?>" class="btn btn-dark">Zobacz</a>
-                        <a href="rollback/<?php echo $item['id'] . '0' . $item['verify_id']; ?>" class="btn btn-warning">Przywróć</a>
-                        <a href="end/<?php echo $item['id'] . '0' . $item['verify_id']; ?>" class="btn btn-success">Zakończ</a>
+                        <form method="post" action="rollback">
+                            <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
+                            <input type="hidden" name="u" value="<?php echo $item['verify_id'] ?>">
+                            <input type="submit" class="btn btn-warning" value="Przywróć">
+                        </form>
+                        <form method="post" action="end">
+                            <input type="hidden" name="id" value="<?php echo $item['id'] ?>">
+                            <input type="hidden" name="u" value="<?php echo $item['verify_id'] ?>">
+                            <input type="submit" class="btn btn-success" value="Zakończ">
+                        </form>
                     </td>
                 </tr>
             <?php endforeach; ?>
