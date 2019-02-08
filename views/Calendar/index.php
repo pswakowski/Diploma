@@ -15,45 +15,44 @@
         $('#calendar').fullCalendar({
             locale: 'pl',
             header: {
-                left: 'prev,next today',
+                left: 'prev, next today',
                 center: 'title',
-                right: 'month,basicWeek,basicDay, list'
+                right: 'month, basicWeek, basicDay, list'
             },
             defaultDate: new Date(),
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             selectable: true,
             selectHelper: true,
-            select: function(start, end) {
-
-                $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
-                $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
-                $('#ModalAdd').modal('show');
-            },
             events: [
                 <?php foreach($viewModel as $event):
+                    $start = explode(" ", $event['start_date']);
+                    $end = explode(" ", $event['end_date']);
+                    if($start[1] == '00:00:00')
 
-                $start = explode(" ", $event['start_date']);
-                $end = explode(" ", $event['end_date']);
-                if($start[1] == '00:00:00'){
-                    $start = $start[0];
-                }else{
-                    $start = $event['start_date'];
-                }
-                if($end[1] == '00:00:00'){
-                    $end = $end[0];
-                }else{
-                    $end = $event['end_date'];
-                }
+                    {
+                        $start = $start[0];
+                    }else
+                    {
+                        $start = $event['start_date'];
+                    }
+
+                    if($end[1] == '00:00:00')
+                    {
+                        $end = $end[0];
+                    }else
+                    {
+                        $end = $event['end_date'];
+                    }
                 ?>
-                {
-                    id: '<?php echo $event['id']; ?>',
-                    title: '<?php echo $event['name']; ?>',
-                    start: '<?php echo $start; ?>',
-                    end: '<?php echo $end; ?>',
-                    color: '<?php echo $event['color']; ?>',
-                    url: '/tasks/show/<?php echo $event['id']; ?>',
-                },
+                    {
+                        id: '<?php echo $event['id']; ?>',
+                        title: '<?php echo $event['name']; ?>',
+                        start: '<?php echo $start; ?>',
+                        end: '<?php echo $end; ?>',
+                        color: '<?php echo $event['color']; ?>',
+                        url: '/tasks/show/<?php echo $event['id']; ?>',
+                    },
                 <?php endforeach; ?>
             ],
             eventClick: function(event) {

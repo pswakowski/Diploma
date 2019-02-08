@@ -93,7 +93,7 @@ class ProjectsModel extends Model
             $this->query("SELECT * FROM projects where id = $id");
             $rows['projects'] = $this->single();
 
-            $this->query("select attachments.id, attachments.title, projects_has_attachment.projects_id from projects_has_attachment inner join attachments on attachments.id = projects_has_attachment.attachments_id where projects_id = :id and attachments.status = 1");
+            $this->query("select attachments.id, attachments.title, attachments.name, attachments.version, projects_has_attachment.projects_id from projects_has_attachment inner join attachments on attachments.id = projects_has_attachment.attachments_id where projects_id = :id and attachments.status = 1");
             $this->bind(":id", $id);
             $rows2['attachments'] = $this->resultSet();
 

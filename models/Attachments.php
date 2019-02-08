@@ -12,6 +12,7 @@ class AttachmentsModel extends Model
         {
             $max_size = 1000000;
             $upload = $_SERVER['DOCUMENT_ROOT'] . "/assets/attachments/";
+            $time = date("d-m-Y-His");
 
             if (is_uploaded_file($_FILES['file']['tmp_name']))
             {
@@ -21,12 +22,14 @@ class AttachmentsModel extends Model
                 }
                 else
                 {
-                    move_uploaded_file($_FILES['file']['tmp_name'], $upload . $_FILES['file']['name']);
+                    $filename = $time . '_' . $_FILES['file']['name'];
+                    move_uploaded_file($_FILES['file']['tmp_name'], $upload . $filename);
 
                     //$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                    $this->query("INSERT INTO attachments (title, sender, version, status) values (:title, :sender, current_timestamp, 1)");
+                    $this->query("INSERT INTO attachments (title, name, sender, version, status) values (:title, :name, :sender, current_timestamp, 1)");
 
                     $this->bind(":title", $_FILES['file']['name']);
+                    $this->bind(":name", $filename);
                     $this->bind(":sender", $_SESSION['user_data']['id']);
 
                     $this->execute();

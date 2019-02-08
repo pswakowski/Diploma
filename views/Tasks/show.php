@@ -28,7 +28,7 @@
                 <label class="my-1 mr-2" for="formGroupExampleInput2">Dołączone załączniki</label>
                 <br>
                     <?php foreach($viewModel['attachments'] as $item) : ?>
-                        <a href="<?php ROOT_URL ?>/assets/attachments/<?php echo $item['title'] ?>" download><span data-feather="download"></span> <?php echo $item['title'] ?></a><br>
+                        <a href="<?php ROOT_URL ?>/assets/attachments/<?php echo $item['name'] ?>" download><span data-feather="download"></span> <?php echo $item['title'] ?></a> (<?php echo $item['version']; ?>)<br>
                     <?php endforeach; ?>
             </div>
         </div>

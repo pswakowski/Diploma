@@ -133,7 +133,7 @@ class TasksModel extends Model
             $this->query("SELECT users.id, users.name, users.lastname FROM users where roles_id = 2 or roles_id = 3");
             $rows7['all_users'] = $this->resultSet();
 
-            $this->query("select attachments.id, attachments.title, tasks_has_attachment.tasks_id from tasks_has_attachment inner join attachments on attachments.id = tasks_has_attachment.attachments_id where tasks_id = :id and attachments.status = 1");
+            $this->query("select attachments.id, attachments.title, attachments.name, attachments.version, tasks_has_attachment.tasks_id from tasks_has_attachment inner join attachments on attachments.id = tasks_has_attachment.attachments_id where tasks_id = :id and attachments.status = 1");
             $this->bind(":id", $id);
             $rows8['attachments'] = $this->resultSet();
 
