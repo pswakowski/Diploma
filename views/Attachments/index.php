@@ -1,3 +1,4 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.3.2/viewer.min.js"></script>
 <h1 class="h2">Dokumenty</h1>
 <hr>
 <?php Helpers::displayMessage(); ?>
@@ -17,9 +18,10 @@
             <tr class="table">
                 <th scope="row"><?php echo $item['id'];  ?></th>
                 <td><?php echo $item['title']; ?></td>
-                <td><?php echo $item['name'] . ' ' . $item['lastname'];  ?></td>
+                <td><?php echo $item['users_name'] . ' ' . $item['lastname'];  ?></td>
                 <td><?php echo $item['version'];  ?></td>
                 <td>
+                    <a target="_blank" href="<?php echo ROOT_URL; ?>/assets/attachments/<?php echo $item['name'];  ?>" class="btn btn-primary">Podgląd</a>
                     <a href="<?php echo ROOT_URL; ?>/attachments/delete/<?php echo $item['id'];  ?>" class="btn btn-danger">Usuń</a>
                 </td>
             </tr>

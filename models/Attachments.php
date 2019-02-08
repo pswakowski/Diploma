@@ -4,7 +4,7 @@ class AttachmentsModel extends Model
 {
     public function index()
     {
-        $this->query("SELECT attachments.id, attachments.title, attachments.version, users.name, users.lastname FROM attachments 
+        $this->query("SELECT attachments.id, attachments.title, attachments.name, attachments.version, users.name as users_name, users.lastname FROM attachments 
 	join users on attachments.sender = users.id where attachments.status = 1");
         $rows = $this->resultSet();
 
