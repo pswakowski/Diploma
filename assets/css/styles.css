@@ -248,3 +248,17 @@ a.article, a.article:hover {
 .logout-link {
     color: red !important;
 }
+
+.fc-content
+{
+    color: black;
+}
+
+#calendar {
+    max-width: 75%;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}

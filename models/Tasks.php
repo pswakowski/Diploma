@@ -45,14 +45,18 @@ class TasksModel extends Model
                 Helpers::redirect('/tasks/add','Błąd! Nie uzupełniłes wszystkich danych!', 'error');
             }
 
+            $color = Array("#0074D9", "#7FDBFF", "#39CCCC", "#3D9970", "#2ECC40", "#01FF70", "#FFDC00", "#FF851B", "#FF4136", "#F012BE", "#DDDDDD");
+            $color_index = array_rand($color, 1);
+
             // Insert into DB
-            $this->query("INSERT INTO tasks (name, description, start_date, end_date, status, projects_id, users_id)
-                          VALUES (:name, :description, current_timestamp, :end_date, '1', :project_id, {$_SESSION['user_data']['id']})");
+            $this->query("INSERT INTO tasks (name, description, start_date, end_date, status, projects_id, users_id, color)
+                          VALUES (:name, :description, current_timestamp, :end_date, '1', :project_id, {$_SESSION['user_data']['id']}, :color)");
 
             $this->bind(':name', $post['name']);
             $this->bind(':description', $post['description']);
             $this->bind(':end_date', $deadline);
             $this->bind(':project_id', $post['project_id']);
+            $this->bind(':color', $color[$color_index]);
 
             $this->execute();
 

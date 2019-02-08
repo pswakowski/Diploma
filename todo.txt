@@ -2,7 +2,6 @@
 
 - attachments name with date
 - lost post on adding tasks/ users/ projects when not filled all fields
-- Calendar (maybe js?) -> http://www.lisenme.com/create-event-calendar-using-jquery-ajax-php/
 - settings stuff (statistics?)
 - milestones(?)
 
