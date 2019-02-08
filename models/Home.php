@@ -7,11 +7,15 @@ class HomeModel extends Model
         $this->query('SELECT users.name, users.lastname, social_media.text, social_media.post_date FROM users INNER JOIN social_media ON users.id = social_media.users_id order by social_media.post_date desc limit 10');
         $rows = $this->resultSet();
 
-
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         if($post['send'])
         {
+            if ($post['input-sm'] == '')
+            {
+                Helpers::redirect('/', 'Nie możesz dodać pustego wpisu!', 'error');
+            }
+
             // Insert into DB
             $this->query("INSERT INTO social_media (text, post_date, users_id) VALUES (:text, current_timestamp, {$_SESSION['user_data']['id']})");
 
@@ -24,7 +28,6 @@ class HomeModel extends Model
             {
                 Helpers::redirect('/', 'Dodałes nowy wpis społecznościowy!', 'success');
             }
-            return;
         }
         return $rows;
     }
