@@ -21,7 +21,7 @@ class UserModel extends Model
 
         if($post['submit'])
         {
-            if($post['email'] == '' || $post['name'] == '' || $post['lastname'] == '' || $post['password'] == '')
+            if($post['roles_id'] == '')
             {
                 Helpers::redirect('/users/add', 'Błąd! Nie uzupełniłeś wszystkich danych!', 'error');
                 return 0;

@@ -40,7 +40,7 @@ class TasksModel extends Model
 
         if($post['submit'])
         {
-            if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['project_id'] == '' || $post['users_id'] == '')
+            if($post['project_id'] == '' || $post['users_id'] == '')
             {
                 Helpers::redirect('/tasks/add','Błąd! Nie uzupełniłes wszystkich danych!', 'error');
             }

@@ -46,11 +46,6 @@ class ProjectsModel extends Model
 
         if($post['submit'])
         {
-            if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['deadlinetime'] == '')
-            {
-                Helpers::redirect('/projects/add', 'Błąd! Nie uzupełniłes wszystkich danych!', 'error');
-            }
-
             $deadline = $post['deadline']. ' ' .$post['deadlinetime'];
 
             // Insert into DB
@@ -127,11 +122,6 @@ class ProjectsModel extends Model
 
         if($post['submit'])
         {
-            if($post['name'] == '' || $post['description'] == '' || $post['deadline'] == '' || $post['deadlinetime'] == '')
-            {
-                Helpers::redirect('/projects/add', 'Błąd! Nie uzupełniłes wszystkich danych!', 'error');
-            }
-
             $deadline = $post['deadline']. ' ' .$post['deadlinetime'];
 
             // Insert into DB

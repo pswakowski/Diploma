@@ -31,7 +31,7 @@
     <?php if ($_SESSION['user_data']['role'] != '2') : ?>
         <form class="card" method="POST" ENCTYPE="multipart/form-data">
             <div class="card-body">
-                <input type="file" value="file" name="file">
+                <input type="file" value="file" name="file" required>
                 <input type="submit" class="btn btn-primary" name="upload" value="Dodaj dokument">
             </div>
         </form>

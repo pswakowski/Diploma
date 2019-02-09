@@ -4,18 +4,18 @@
     <div class="col">
         <div class="form-group">
             <label for="formGroupExampleInput">Nazwa projektu</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="" name="name" value="<?php echo $viewModel['projects']['name']; ?>">
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="" name="name" value="<?php echo $viewModel['projects']['name']; ?>" required>
         </div>
         <div class="form-group">
             <label for="formGroupExampleInput2">Treść projektu</label>
-            <textarea rows="8" type="text" class="form-control" id="formGroupExampleInput2" placeholder="" name="description"><?php echo $viewModel['projects']['description']; ?></textarea>
+            <textarea rows="8" type="text" class="form-control" id="formGroupExampleInput2" placeholder="" name="description" required><?php echo $viewModel['projects']['description']; ?></textarea>
         </div>
         <div class="form-group">
             <h6>Deadline:</h6>
             <label class="my-1 mr-2" for="formGroupExampleInput2">Data</label>
-            <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="date" name="deadline" value="<?php echo substr($viewModel['projects']['end_date'], 0, -9); ?>">
+            <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="date" name="deadline" value="<?php echo substr($viewModel['projects']['end_date'], 0, -9); ?>" required>
             <br><label class="my-1 mr-2" for="formGroupExampleInput2">Godzina</label>
-            <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="time" name="deadlinetime" value="<?php echo substr($viewModel['projects']['end_date'], 11); ?>">
+            <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="time" name="deadlinetime" value="<?php echo substr($viewModel['projects']['end_date'], 11); ?>" required>
         </div>
         <input type="submit" class="btn btn-primary" name="submit" value="Edytuj projekt">
         <a class="btn btn-danger" href="<?php echo ROOT_URL; ?>/projects">Powrót</a>

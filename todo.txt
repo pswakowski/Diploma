@@ -1,6 +1,5 @@
 // todo list
 
-- lost post on adding tasks/ users/ projects when not filled all fields (https://getbootstrap.com/docs/4.0/components/forms/#how-it-works)
 - any chart of projects %?
 - settings stuff (statistics?)
 - milestones(?)

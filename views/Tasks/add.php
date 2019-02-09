@@ -5,24 +5,24 @@
     <div class="col">
         <div class="form-group">
             <label for="formGroupExampleInput">Nazwa zadania</label>
-            <input name="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="" value="<?php echo $_SESSION['posted']['name']; ?>">
+            <input name="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Nazwa zadania..." required>
         </div>
         <div class="form-group">
             <label for="formGroupExampleInput2">Treść zadania</label>
-            <textarea name="description" rows="8" type="text" class="form-control" id="formGroupExampleInput2" placeholder=""><?php echo $_SESSION['posted']['description']; ?></textarea>
+            <textarea name="description" rows="8" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Treść zadania..." required></textarea>
         </div>
 
         <div class="row">
             <div class="col">
                 <div class="form-group">
                     <label class="my-1 mr-2" for="formGroupExampleInput2">Data:</label>
-                    <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="date" name="deadline" value="<?php echo $_SESSION['posted']['deadline']; ?>">
+                    <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="date" name="deadline" required>
                     <br><label class="my-1 mr-2" for="formGroupExampleInput2">Godzina:</label>
-                    <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="time" name="deadlinetime" value="<?php echo $_SESSION['posted']['deadlinetime']; ?>">
+                    <input id="deadline" class="form-control" style="max-width: 260px; display: inline-block;" type="time" name="deadlinetime" required>
                 </div>
                 <div class="form-group">
                     <label class="my-1 mr-2" for="formGroupExampleInput2">Projekt</label>
-                    <select name="project_id" class="custom-select my-1 mr-sm-4" id="inlineFormCustomSelectPref">
+                    <select name="project_id" class="custom-select my-1 mr-sm-4" id="inlineFormCustomSelectPref" required>
                         <option selected>Wybierz...</option>
                         <?php foreach($viewModel['projects'] as $item) : ?>
                         <?php  if(empty($item)) continue;  ?>
