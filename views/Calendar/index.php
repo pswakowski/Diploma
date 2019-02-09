@@ -21,6 +21,8 @@
             },
             defaultDate: new Date(),
             editable: true,
+            fixedWeekCount: false,
+            height: 700,
             eventLimit: true, // allow "more" link when too many events
             selectable: true,
             selectHelper: true,
