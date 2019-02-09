@@ -1,4 +1,3 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.3.2/viewer.min.js"></script>
 <h1 class="h2">Dokumenty</h1>
 <hr>
 <?php Helpers::displayMessage(); ?>

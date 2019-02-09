@@ -41,6 +41,9 @@ class ProjectsModel extends Model
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+        $color = Array("bg-danger", "bg-warning", "bg-info", "bg-success", "");
+        $color_index = array_rand($color, 1);
+
 
         $data = array_merge($rows, $rows2);
 
@@ -49,12 +52,13 @@ class ProjectsModel extends Model
             $deadline = $post['deadline']. ' ' .$post['deadlinetime'];
 
             // Insert into DB
-            $this->query("INSERT INTO projects (name, description, start_date, end_date, author_id, status) 
-                          VALUES (:name, :description, current_timestamp, :end_date, {$_SESSION['user_data']['id']}, '1')");
+            $this->query("INSERT INTO projects (name, description, start_date, end_date, author_id, status, color) 
+                          VALUES (:name, :description, current_timestamp, :end_date, {$_SESSION['user_data']['id']}, '1', :color)");
 
             $this->bind(':name', $post['name']);
             $this->bind(':description', $post['description']);
             $this->bind(':end_date', $deadline);
+            $this->bind(':color', $color[$color_index]);
 
             $this->execute();
 

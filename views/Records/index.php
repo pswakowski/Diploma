@@ -1,6 +1,5 @@
 <h1 class="h2">Ewidencja czasu pracy</h1>
 <hr>
-<?php //Helpers::displayMessage(); ?>
 <div class="table-responsive">
     <table class="table table-hover">
         <thead class="thead-dark">

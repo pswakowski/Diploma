@@ -1,7 +1,5 @@
 // todo list
 
-- any chart of projects %?
-- settings stuff (statistics?)
 - milestones(?)
 
 // audyt

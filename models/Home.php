@@ -5,17 +5,37 @@ class HomeModel extends Model
     public function index()
     {
         $this->query('SELECT users.name, users.lastname, social_media.text, social_media.post_date FROM users INNER JOIN social_media ON users.id = social_media.users_id order by social_media.post_date desc limit 10');
-        $rows = $this->resultSet();
+        $rows['social'] = $this->resultSet();
+
+        $this->query("SELECT projects.name, projects.end_date, projects.color, 
+	    sum(case when users_has_tasks.status = '0' then 1 else 0 end) finished,
+        sum(case when projects.status = '1' then 1 else 0 end) result
+        FROM tasks right JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id 
+        	right JOIN users u1 ON u1.id = users_has_tasks.users_id 
+                right JOIN projects ON tasks.projects_id = projects.id 
+                 JOIN users u2 ON projects.author_id = u2.id 
+                 	where projects.status = '1'
+                	group by projects.name order by projects.id asc");
+        $rows2['projects'] = $this->resultSet();
+
+        $this->query('SELECT id, email, name, lastname, last_login from users where id = :id');
+        $this->bind(':id', $_SESSION['user_data']['id']);
+        $rows3['users'] = $this->resultSet();
+
+        $this->query("SELECT sum(case when users_has_tasks.status = '0' then 1 else 0 end) finished,
+        sum(case when users_has_tasks.status >= '0' then 1 else 0 end) alls,
+        sum(case when users_has_tasks.status = '2' then 1 else 0 end) verify
+	    FROM tasks JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id 
+	    JOIN users u1 ON u1.id = users_has_tasks.users_id where u1.id = :id");
+        $this->bind(":id", $_SESSION['user_data']['id']);
+        $rows4['tasks_done'] = $this->single();
+        
+        $data = array_merge($rows, $rows2, $rows3, $rows4);
 
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         if($post['send'])
         {
-            if ($post['input-sm'] == '')
-            {
-                Helpers::redirect('/', 'Nie możesz dodać pustego wpisu!', 'error');
-            }
-
             // Insert into DB
             $this->query("INSERT INTO social_media (text, post_date, users_id) VALUES (:text, current_timestamp, {$_SESSION['user_data']['id']})");
 
@@ -29,7 +49,7 @@ class HomeModel extends Model
                 Helpers::redirect('/', 'Dodałes nowy wpis społecznościowy!', 'success');
             }
         }
-        return $rows;
+        return $data;
     }
 
     public function login()
