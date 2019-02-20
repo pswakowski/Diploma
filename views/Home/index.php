@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="progress progress-sm mr-2">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo @Helpers::progress($viewModel['tasks_done']['finished'], $viewModel['tasks_done']['alls'] + $viewModel['tasks_done']['finished']); ?>" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: <?php echo @Helpers::progress($viewModel['tasks_done']['finished'], $viewModel['tasks_done']['alls']); ?>" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>

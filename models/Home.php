@@ -14,7 +14,7 @@ class HomeModel extends Model
         	right JOIN users u1 ON u1.id = users_has_tasks.users_id 
                 right JOIN projects ON tasks.projects_id = projects.id 
                  JOIN users u2 ON projects.author_id = u2.id 
-                 	where projects.status = '1'
+                 	where projects.status = '1' and projects.id > 1
                 	group by projects.name order by projects.id asc");
         $rows2['projects'] = $this->resultSet();
 

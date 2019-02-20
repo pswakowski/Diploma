@@ -25,7 +25,7 @@
     <!-- Sidebar Holder -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>UTP / Firma</h3>
+            <h3>UTP</h3>
         </div>
 
         <ul class="list-unstyled components">
@@ -70,6 +70,11 @@
             <li <?php if (strstr($_SERVER['REQUEST_URI'], '/calendar')) echo 'class="active"'; ?>>
                 <a href="<?php echo ROOT_URL; ?>/calendar"><span data-feather="calendar"></span> Kalendarz</a>
             </li>
+            <?php if ($_SESSION['user_data']['role'] == '3') : ?>
+                <li <?php if (strstr($_SERVER['REQUEST_URI'], '/attachments')) echo 'class="active"'; ?>>
+                    <a href="<?php echo ROOT_URL; ?>/attachments"><span data-feather="file"></span> Dokumenty</a>
+                </li>
+            <?php endif; ?>
         </ul>
         <?php if ($_SESSION['user_data']['role'] == '1') : ?>
         <ul class="list-unstyled components">
