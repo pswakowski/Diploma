@@ -18,7 +18,7 @@
 
 <body class="text-center">
 <form method="POST" class="form-signin">
-    <img class="mb-4" src="http://swakowski.eu/img/swakowski_eu.png" alt="" width="92" height="92">
+    <img class="mb-4" src="http://www.cpe-powereng2016.utp.edu.pl/wp-content/uploads/2015/05/pl_UTP_godlo.png" alt="" width="256" height="256">
     <h1 class="h3 mb-3 font-weight-normal">Panel logowania</h1>
     <label for="inputEmail" class="sr-only">Email address</label>
     <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
