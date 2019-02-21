@@ -1,8 +1,8 @@
 // todo list
 
-- milestones(?)
 
 // audyt
 - bind every query to db
+- brute force
 
 deadline 29.01.19r.

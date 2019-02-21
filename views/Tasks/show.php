@@ -71,6 +71,8 @@
             <br><br>
         <?php endif; ?>
         <a class="btn btn-danger" href="<?php ROOT_URL ?>/tasks/finish/<?php echo $viewModel['tasks']['id'] ?>">Zakończ zadanie</a>
+        <br><br>
+        <a class="btn btn-primary" href="<?php echo ROOT_URL; ?>/tasks">Powrót</a>
     </div>
 </div>
 <div class="row">
