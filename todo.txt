@@ -4,5 +4,6 @@
 // audyt
 - bind every query to db
 - brute force
+- check every controller for role abuse
 
 deadline 29.01.19r.
