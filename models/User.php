@@ -54,13 +54,15 @@ class UserModel extends Model
 
         if (isset($id) && $id != '')
         {
-            $this->query("SELECT roles.id, roles.name, users.roles_id FROM roles INNER JOIN users ON users.roles_id = roles.id where users.id = $id");
+            $this->query("SELECT roles.id, roles.name, users.roles_id FROM roles INNER JOIN users ON users.roles_id = roles.id where users.id = :id");
+            $this->bind(':id', $id);
             $rows['roles'] = $this->single();
 
             $this->query("SELECT roles.id, roles.name FROM roles");
             $rows2['all_roles'] = $this->resultSet();
 
-            $this->query("SELECT * FROM users where id = $id");
+            $this->query("SELECT * FROM users where id = :id");
+            $this->bind(':id', $id);
             $rows3['users'] = $this->single();
 
             $data = array_merge($rows, $rows2, $rows3);
@@ -70,10 +72,6 @@ class UserModel extends Model
 
         if($post['submit'])
         {
-            if($post['email'] == '' || $post['name'] == '' || $post['lastname'] == '')
-            {
-                Helpers::redirect('/users/edit/' . $id, 'Błąd! Nie uzupełniłeś wszystkich danych!', 'error');
-            }
             // Insert into DB
             $this->query("UPDATE users set email = :email, name = :name, lastname = :lastname, roles_id = :roles_id where id = :id");
 

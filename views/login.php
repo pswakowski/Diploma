@@ -21,9 +21,9 @@
     <img class="mb-4" src="http://www.cpe-powereng2016.utp.edu.pl/wp-content/uploads/2015/05/pl_UTP_godlo.png" alt="" width="256" height="256">
     <h1 class="h3 mb-3 font-weight-normal">Panel logowania</h1>
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+    <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email" value="">
     <label for="inputPassword" class="sr-only">Hasło</label>
-    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="*******" required>
+    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="*******" value="">
 
     <input class="btn btn-lg btn-primary btn-block" name="submit" type="submit" value="Zaloguj się">
     <br>

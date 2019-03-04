@@ -10,7 +10,8 @@ class CalendarModel extends Model
                              JOIN users u1 ON u1.id = users_has_tasks.users_id
                              JOIN projects ON tasks.projects_id = projects.id
                              JOIN users u2 ON tasks.users_id = u2.id
-                             WHERE users_has_tasks.status = 1 AND u1.id = '{$_SESSION['user_data']['id']}'");
+                             WHERE users_has_tasks.status = 1 AND u1.id = :user");
+        $this->bind(':user', $_SESSION['user_data']['id']);
         $rows = $this->resultSet();
 
         return $rows;

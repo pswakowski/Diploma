@@ -104,7 +104,7 @@
         <h6 class="border-bottom border-gray pb-2 mb-0">Ostatnie wpisy</h6>
         <?php foreach ($viewModel['social'] as $item) : ?>
         <div class="media text-muted pt-3">
-            <img alt="" class="mr-2 rounded">
+            
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <strong class="d-block text-gray-dark"><?php echo $item['name'] . ' ' . $item['lastname']; ?> <small><?php echo $item['post_date']; ?></small></strong>
                 <?php echo $item['text']; ?>

@@ -53,12 +53,13 @@ class ProjectsModel extends Model
 
             // Insert into DB
             $this->query("INSERT INTO projects (name, description, start_date, end_date, author_id, status, color) 
-                          VALUES (:name, :description, current_timestamp, :end_date, {$_SESSION['user_data']['id']}, '1', :color)");
+                          VALUES (:name, :description, current_timestamp, :end_date, :user, '1', :color)");
 
             $this->bind(':name', $post['name']);
             $this->bind(':description', $post['description']);
             $this->bind(':end_date', $deadline);
             $this->bind(':color', $color[$color_index]);
+            $this->bind(':user', $_SESSION['user_data']['id']);
 
             $this->execute();
 
@@ -89,7 +90,8 @@ class ProjectsModel extends Model
 
         if (isset($id) && $id != '')
         {
-            $this->query("SELECT * FROM projects where id = $id");
+            $this->query("SELECT * FROM projects where id = :id");
+            $this->bind(":id", $id);
             $rows['projects'] = $this->single();
 
             $this->query("select attachments.id, attachments.title, attachments.name, attachments.version, projects_has_attachment.projects_id from projects_has_attachment inner join attachments on attachments.id = projects_has_attachment.attachments_id where projects_id = :id and attachments.status = 1");
@@ -109,7 +111,8 @@ class ProjectsModel extends Model
 
         if (isset($id) && $id != '')
         {
-            $this->query("SELECT * FROM projects where id = $id");
+            $this->query("SELECT * FROM projects where id = :id");
+            $this->bind(":id", $id);
             $rows['projects'] = $this->single();
 
             $this->query("select attachments.id, attachments.title from projects_has_attachment inner join attachments on attachments.id = projects_has_attachment.attachments_id where projects_id = :id and attachments.status = 1");
@@ -129,8 +132,8 @@ class ProjectsModel extends Model
             $deadline = $post['deadline']. ' ' .$post['deadlinetime'];
 
             // Insert into DB
-            $this->query("UPDATE projects set name = :name, description = :description, end_date = :end_date where id = $id");
-
+            $this->query("UPDATE projects set name = :name, description = :description, end_date = :end_date where id = :id");
+            $this->bind(":id", $id);
             $this->bind(':name', $post['name']);
             $this->bind(':description', $post['description']);
             $this->bind(':end_date', $deadline);

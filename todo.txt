@@ -1,9 +1,8 @@
 // todo list
-
+- ewidencja czasu pracy i kolorowanie
 
 // audyt
-- bind every query to db
 - brute force
-- check every controller for role abuse
 
+- walide all
 deadline 29.01.19r.

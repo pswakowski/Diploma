@@ -10,7 +10,8 @@ class TasksModel extends Model
                              JOIN users u1 ON u1.id = users_has_tasks.users_id
                              JOIN projects ON tasks.projects_id = projects.id 
                              JOIN users u2 ON tasks.users_id = u2.id 
-                             WHERE users_has_tasks.status = 1 AND u1.id = '{$_SESSION['user_data']['id']}'");
+                             WHERE users_has_tasks.status = 1 AND u1.id = :id");
+        $this->bind(':id', $_SESSION['user_data']['id']);
         $rows = $this->resultSet();
 
         return $rows;
@@ -50,12 +51,13 @@ class TasksModel extends Model
 
             // Insert into DB
             $this->query("INSERT INTO tasks (name, description, start_date, end_date, status, projects_id, users_id, color)
-                          VALUES (:name, :description, current_timestamp, :end_date, '1', :project_id, {$_SESSION['user_data']['id']}, :color)");
+                          VALUES (:name, :description, current_timestamp, :end_date, '1', :project_id, :id, :color)");
 
             $this->bind(':name', $post['name']);
             $this->bind(':description', $post['description']);
             $this->bind(':end_date', $deadline);
             $this->bind(':project_id', $post['project_id']);
+            $this->bind(':id', $_SESSION['user_data']['id']);
             $this->bind(':color', $color[$color_index]);
 
             $this->execute();
@@ -100,7 +102,8 @@ class TasksModel extends Model
         if (isset($id) && $id != '')
         {
             // 1. tasks data
-            $this->query("SELECT * FROM tasks where id = $id");
+            $this->query("SELECT * FROM tasks where id = :id");
+            $this->bind(':id', $id);
             $rows['tasks'] = $this->single();
 
             // 2. chosen projects name for tasks
@@ -109,7 +112,8 @@ class TasksModel extends Model
 
             // 3. notes
             $this->query("SELECT notes.note, notes.date, users.name, users.lastname FROM notes 
-                          INNER JOIN users ON users.id = notes.users_Id WHERE tasks_id = $id");
+                          INNER JOIN users ON users.id = notes.users_Id WHERE tasks_id = :id");
+            $this->bind(':id', $id);
             $rows3['notes'] = $this->resultSet();
 
             // 4. All admins which have this task
@@ -117,14 +121,16 @@ class TasksModel extends Model
                             FROM tasks
                             INNER JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                             INNER JOIN users ON users.id = users_has_tasks.users_id
-                            WHERE tasks.id = $id AND users.roles_id = 1");
+                            WHERE tasks.id = :id AND users.roles_id = 1");
+            $this->bind(':id', $id);
             $rows4['admins'] = $this->resultSet();
 
             $this->query("SELECT users.id, tasks.name, users.email, users.name, users.lastname
                             FROM tasks
                             INNER JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                             INNER JOIN users ON users.id = users_has_tasks.users_id
-                            WHERE tasks.id = $id AND users.roles_id != 1");
+                            WHERE tasks.id = :id AND users.roles_id != 1");
+            $this->bind(':id', $id);
             $rows5['users'] = $this->resultSet();
 
             $this->query("SELECT users.id, users.name, users.lastname FROM users where roles_id = 1");
@@ -144,8 +150,9 @@ class TasksModel extends Model
             if($post['submit'])
             {
                 // Insert into DB
-                $this->query("INSERT INTO notes (note, date, users_id, tasks_id) VALUES (:note, current_timestamp, {$_SESSION['user_data']['id']}, $id)");
-
+                $this->query("INSERT INTO notes (note, date, users_id, tasks_id) VALUES (:note, current_timestamp, :user, :id)");
+                $this->bind(':id', $id);
+                $this->bind(':user', $_SESSION['user_data']['id']);
                 $this->bind(':note', $post['note']);
 
                 $this->execute();
@@ -167,11 +174,13 @@ class TasksModel extends Model
         if (isset($id) && $id != '')
         {
             // 1. tasks data
-            $this->query("SELECT * FROM tasks where id = $id");
+            $this->query("SELECT * FROM tasks where id = :id");
+            $this->bind(':id', $id);
             $rows['tasks'] = $this->single();
 
             // 2. chosen projects name for tasks
-            $this->query("SELECT projects.name, projects.id from tasks inner join projects on tasks.projects_id = projects.id where tasks.id = $id");
+            $this->query("SELECT projects.name, projects.id from tasks inner join projects on tasks.projects_id = projects.id where tasks.id = :id");
+            $this->bind(':id', $id);
             $rows2['projects'] = $this->single();
 
             $this->query("SELECT projects.name, projects.id from projects where status = '1'");
@@ -179,21 +188,24 @@ class TasksModel extends Model
 
             // 3. notes
             $this->query("SELECT notes.note, notes.date, users.name, users.lastname FROM notes 
-                          INNER JOIN users ON users.id = notes.users_Id WHERE tasks_id = $id");
+                          INNER JOIN users ON users.id = notes.users_Id WHERE tasks_id = :id");
+            $this->bind(':id', $id);
             $rows3['notes'] = $this->resultSet();
 
             $this->query("SELECT users.id, tasks.name, users.email, users.name, users.lastname
                             FROM tasks
                             INNER JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                             INNER JOIN users ON users.id = users_has_tasks.users_id
-                            WHERE tasks.id = $id AND users.roles_id = 1");
+                            WHERE tasks.id = :id AND users.roles_id = 1");
+            $this->bind(':id', $id);
             $rows4['admins'] = $this->resultSet();
 
             $this->query("SELECT users.id, tasks.name, users.email, users.name, users.lastname
                             FROM tasks
                             INNER JOIN users_has_tasks ON tasks.id = users_has_tasks.tasks_id
                             INNER JOIN users ON users.id = users_has_tasks.users_id
-                            WHERE tasks.id = $id AND users.roles_id != 1");
+                            WHERE tasks.id = :id AND users.roles_id != 1");
+            $this->bind(':id', $id);
             $rows5['users'] = $this->resultSet();
 
             $this->query("SELECT users.id, users.name, users.lastname FROM users where roles_id = 1");
@@ -218,12 +230,13 @@ class TasksModel extends Model
             if($post['submit'])
             {
                 // Insert into DB
-                $this->query("UPDATE tasks SET name = :name, description = :description, end_date = :end_date, projects_id = :projects_id where id = $id");
+                $this->query("UPDATE tasks SET name = :name, description = :description, end_date = :end_date, projects_id = :projects_id where id = :id");
 
                 $this->bind(':name', $post['name']);
                 $this->bind(':description', $post['description']);
                 $this->bind(':end_date', $deadline);
                 $this->bind(':projects_id', $post['project_id']);
+                $this->bind(':id', $id);
 
                 $this->execute();
 
@@ -265,7 +278,8 @@ class TasksModel extends Model
                              JOIN users u1 ON u1.id = users_has_tasks.users_id
                              JOIN projects ON tasks.projects_id = projects.id 
                              JOIN users u2 ON tasks.users_id = u2.id 
-                             WHERE users_has_tasks.status = 0 AND u1.id = '{$_SESSION['user_data']['id']}' order by tasks.id asc");
+                             WHERE users_has_tasks.status = 0 AND u1.id = :user order by tasks.id asc");
+        $this->bind(':user', $_SESSION['user_data']['id']);
         $rows['users'] = $this->resultSet();
 
         $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u1.id as verify_id, u1.name AS verify_name, u1.lastname AS verify_lastname, u2.name AS users_name, u2.lastname AS users_lastname, projects.name AS projects_name
@@ -289,7 +303,8 @@ class TasksModel extends Model
                              JOIN users u1 ON u1.id = users_has_tasks.users_id
                              JOIN projects ON tasks.projects_id = projects.id 
                              JOIN users u2 ON tasks.users_id = u2.id 
-                             WHERE users_has_tasks.status = 2 AND u1.id = '{$_SESSION['user_data']['id']}'");
+                             WHERE users_has_tasks.status = 2 AND u1.id = :user");
+        $this->bind(':user', $_SESSION['user_data']['id']);
         $rows['users'] = $this->resultSet();
 
         $this->query("SELECT tasks.id, tasks.name, tasks.start_date, tasks.end_date, u1.id as verify_id, u1.name AS verify_name, u1.lastname AS verify_lastname, u2.name AS users_name, u2.lastname AS users_lastname, projects.name AS projects_name

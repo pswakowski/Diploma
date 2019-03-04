@@ -37,9 +37,10 @@ class HomeModel extends Model
         if($post['send'])
         {
             // Insert into DB
-            $this->query("INSERT INTO social_media (text, post_date, users_id) VALUES (:text, current_timestamp, {$_SESSION['user_data']['id']})");
+            $this->query("INSERT INTO social_media (text, post_date, users_id) VALUES (:text, current_timestamp, :user)");
 
             $this->bind(':text', $post['input-sm']);
+            $this->bind(':user', $_SESSION['user_data']['id']);
 
             $this->execute();
 
