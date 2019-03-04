@@ -26,7 +26,8 @@ class Social extends Controller
         }
         $id = $_GET['id'];
         $model = new UserModel();
-        $model->query("DELETE FROM social_media WHERE id = $id");
+        $model->query("DELETE FROM social_media WHERE id = :id");
+        $model->bind(':id', $id);
         $model->execute();
         Helpers::redirect('/social', 'Usunąłeś wpis społecznościowy o ID: ' . $id . '.', 'success');
     }

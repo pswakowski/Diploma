@@ -76,7 +76,8 @@ class Users extends Controller
 
         $id = $_GET['id'];
         $model = new UserModel();
-        $model->query("UPDATE users set status = '0' where id = $id");
+        $model->query("UPDATE users set status = '0' where id = :id");
+        $model->bind(":id", $id);
         $model->execute();
         Helpers::redirect('/users', 'Zmieniłeś status użytkownika o ID: ' . $id . ' na nieaktywny.', 'success');
     }
@@ -95,7 +96,8 @@ class Users extends Controller
 
         $id = $_GET['id'];
         $model = new UserModel();
-        $model->query("UPDATE users set status = '1' where id = $id");
+        $model->query("UPDATE users set status = '1' where id = :id");
+        $model->bind(":id", $id);
         $model->execute();
         Helpers::redirect('/users', 'Zmieniłeś status użytkownika o ID: ' . $id . ' na aktywny.', 'success');
     }

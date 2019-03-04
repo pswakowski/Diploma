@@ -72,7 +72,7 @@ class Projects extends Controller
 
         $id = $_GET['id'];
         $model = new ProjectsModel();
-        $model->query("UPDATE projects set status = '0' where id = $id");
+        $model->query("UPDATE projects set status = '0' where id = :id");
         $model->bind(":id", $id);
 
         $model->execute();
@@ -93,7 +93,7 @@ class Projects extends Controller
 
         $id = $_GET['id'];
         $model = new ProjectsModel();
-        $model->query("UPDATE projects set status = '1' where id = $id");
+        $model->query("UPDATE projects set status = '1' where id = :id");
         $model->bind(":id", $id);
 
         $model->execute();
