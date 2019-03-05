@@ -61,39 +61,89 @@ class HomeModel extends Model
         if($post['submit'])
         {
             // Insert into DB
-            $this->query("SELECT * FROM users where email = :email AND password = :password AND status = '1'");
+            $this->query("SELECT * FROM users where email = :email AND status = '1'");
 
             $this->bind(':email', $post['email']);
-            $this->bind(':password', $password);
+            //$this->bind(':password', $password);
 
             $row = $this->single();
-
-            if ($row)
+            $status = $row['attempt'];
+            if (!$row)
             {
-                $_SESSION['is_logged'] = true;
-                $_SESSION['user_data'] = array(
-                    "id" => $row['id'],
-                    "name" => $row['name'],
-                    "lastname" => $row['lastname'],
-                    "role" => $row['roles_id'],
-                );
-
-                $date = new DateTime($row['last_login']);
-                $date_now = new DateTime();
-                $interval = $date->diff($date_now);
-
-                if ($interval->days != 0)
-                {
-                    $this->query("UPDATE users SET last_login = CURRENT_TIMESTAMP where email = :email");
-                    $this->bind(':email', $post['email']);
-                    $this->single();
-                }
-
-                Helpers::redirect(ROOT_PATH, 'Zalogowałeś się poprawnie.', 'success');
+                Helpers::redirect(ROOT_PATH, 'Nie ma w systemie takiego pracownika.', 'error');
             }
             else
             {
-                Helpers::redirect('/home/login', 'Niepoprawne dane logowania', 'error');
+                if (substr($status, 0, 2) == "b-")
+                {
+                    $blockedTime = substr($status, 2);
+                    if (time() < $blockedTime)
+                    {
+                        $block = true;
+                    } else
+                    {
+                        $this->query("UPDATE users SET attempt = '' WHERE email = :email");
+                        $this->bind(':email', $post['email']);
+                        $this->single();
+                    }
+                }
+
+                if ($block == true)
+                {
+                    Helpers::redirect('/home/login', 'Zostaniesz odblokowany o: <br>' . date("Y-m-d H:i:s", $blockedTime), 'error');
+                }
+
+                if (!isset($block))
+                {
+                    if ($row['password'] == $password)
+                    {
+                        $_SESSION['is_logged'] = true;
+                        $_SESSION['user_data'] = array(
+                            "id" => $row['id'],
+                            "name" => $row['name'],
+                            "lastname" => $row['lastname'],
+                            "role" => $row['roles_id'],
+                        );
+
+                        $date = new DateTime($row['last_login']);
+                        $date_now = new DateTime();
+                        $interval = $date->diff($date_now);
+
+                        if ($interval->days != 0)
+                        {
+                            $this->query("UPDATE users SET last_login = CURRENT_TIMESTAMP where email = :email");
+                            $this->bind(':email', $post['email']);
+                            $this->single();
+                        }
+
+                        Helpers::redirect(ROOT_PATH, 'Zalogowałeś się poprawnie.', 'success');
+                    } else
+                    {
+                        if ($status == "")
+                        {
+                            // User was not logged in before
+                            $this->query("UPDATE users set attempt='1' WHERE email = :email");
+                            $this->bind(':email', $post['email']);
+                            $this->single();
+                            Helpers::redirect(ROOT_PATH, 'To Twoja 1 zła próba logowania. Po 3 złej zostaniesz zablokowany.', 'error');
+                        } else if ($status == 3)
+                        {
+                            $this->query("UPDATE users SET attempt = :attempt WHERE email = :email");
+                            $this->bind(":attempt", "b-" . strtotime("+15 minutes", time()));
+                            $this->bind(':email', $post['email']);
+                            $this->single();
+                            Helpers::redirect(ROOT_PATH, 'Twoje konto zostało zablokowane na 15 minut.', 'error');
+                        } else if ($status <= 3)
+                        {
+                            $status++;
+                            $this->query("UPDATE users SET attempt = :attempt WHERE email = :email");
+                            $this->bind(':attempt', $status);
+                            $this->bind(':email', $post['email']);
+                            $this->single();
+                            Helpers::redirect(ROOT_PATH, "To Twoja $status zła próba logowania. Po 3 złej zostaniesz zablokowany", 'error');
+                        }
+                    }
+                }
             }
         }
         return;

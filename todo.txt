@@ -1,7 +1,6 @@
 // todo list
 
 // audyt
-- brute force
 
 - walide all
 deadline 29.01.19r.

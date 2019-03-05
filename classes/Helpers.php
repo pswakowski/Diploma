@@ -120,27 +120,6 @@ class Helpers
         {
             return $zero_hours->format("H:i:s");
         }
-
-//        $start_working_day = new DateTime("07:00:00");
-//        $end_working_day = new DateTime("18:00:00");
-//        if ($interval->days == 0)
-//        {
-//            if ($date_now > $end_working_day) {
-//                return $end_working_day->diff($date_from_base)->format("%d%h godz. %i min.");
-//            }
-//            else if ($date_now < $start_working_day)
-//            {
-//                $zero_hours = new DateTime("00:00:00");
-//                return $zero_hours->format("H:i:s");
-//            }  else
-//            {
-//                return $date_from_base->diff($date_now)->format("%h godz. %i min.");
-//            }
-//        } else
-//        {
-//            $zero_hours = new DateTime("00:00:00");
-//            return $zero_hours->format("H:i:s");
-//        }
     }
 
     public static function progress($finished, $all)
