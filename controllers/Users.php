@@ -53,6 +53,12 @@ class Users extends Controller
 
     protected function logout()
     {
+        $id = $_SESSION['user_data']['id'];
+        $model = new UserModel();
+        $model->query("UPDATE users SET last_logout = CURRENT_TIMESTAMP where id = :id");
+        $model->bind(":id", $id);
+        $model->execute();
+        
         // kill all session variables
         unset($_SESSION['is_logged']);
         unset($_SESSION['user_data']);

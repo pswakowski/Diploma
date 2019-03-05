@@ -1,5 +1,4 @@
 // todo list
-- ewidencja czasu pracy i kolorowanie
 
 // audyt
 - brute force

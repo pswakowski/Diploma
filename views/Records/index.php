@@ -9,6 +9,7 @@
             <th scope="col">Imię</th>
             <th scope="col">Nazwisko</th>
             <th scope="col">Zalogowany</th>
+            <th scope="col">Ostatnie wylogowanie</th>
             <th scope="col">Czas pracy</th>
         </tr>
         </thead>
@@ -20,7 +21,8 @@
                 <td><?php echo $item['name']  ?></td>
                 <td><?php echo $item['lastname']  ?></td>
                 <td><?php echo $item['last_login']  ?></td>
-                <td><?php echo Helpers::get_working_time($item['last_login']);  ?></td>
+                <td><?php echo $item['last_logout']  ?></td>
+                <td><?php echo Helpers::get_working_time($item['last_login'], $item['last_logout']);  ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

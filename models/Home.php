@@ -18,7 +18,7 @@ class HomeModel extends Model
                 	group by projects.name order by projects.id asc");
         $rows2['projects'] = $this->resultSet();
 
-        $this->query('SELECT id, email, name, lastname, last_login from users where id = :id');
+        $this->query('SELECT id, email, name, lastname, last_login, last_logout from users where id = :id');
         $this->bind(':id', $_SESSION['user_data']['id']);
         $rows3['users'] = $this->resultSet();
 
@@ -78,22 +78,17 @@ class HomeModel extends Model
                     "role" => $row['roles_id'],
                 );
 
-                if (date("H:i:s") > "08:00:00" && date("H:i:s") < "18:00:00")
+                $date = new DateTime($row['last_login']);
+                $date_now = new DateTime();
+                $interval = $date->diff($date_now);
+
+                if ($interval->days != 0)
                 {
-                    $time = date("Y-m-d H:i:s");
-                    $this->query("UPDATE users SET last_login = :time where email = :email");
+                    $this->query("UPDATE users SET last_login = CURRENT_TIMESTAMP where email = :email");
                     $this->bind(':email', $post['email']);
-                    $this->bind(':time', $time);
                     $this->single();
                 }
-                if (date("H:i:s") > "07:00:00" && date("H:i:s") < "08:00:00")
-                {
-                    $time = date("Y-m-d") . " 08:00:00";
-                    $this->query("UPDATE users SET last_login = :time where email = :email");
-                    $this->bind(':email', $post['email']);
-                    $this->bind(':time', $time);
-                    $this->single();
-                }
+
                 Helpers::redirect(ROOT_PATH, 'Zalogowałeś się poprawnie.', 'success');
             }
             else
