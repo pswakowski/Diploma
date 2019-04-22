@@ -143,7 +143,12 @@ class TasksModel extends Model
             $this->bind(":id", $id);
             $rows8['attachments'] = $this->resultSet();
 
-            $data = array_merge($rows, $rows2, $rows3, $rows4, $rows5, $rows6, $rows7, $rows8);
+            $this->query("select users_id as usid, tasks_id as tasid, status as stat from users_has_tasks where users_id = :uid and tasks_id = :id");
+            $this->bind(":id", $id);
+            $this->bind(":uid", $_SESSION['user_data']['id']);
+            $rows9['status'] = $this->single();
+
+            $data = array_merge($rows, $rows2, $rows3, $rows4, $rows5, $rows6, $rows7, $rows8, $rows9);
 
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 

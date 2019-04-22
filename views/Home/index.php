@@ -113,7 +113,7 @@
         <?php endforeach; ?>
         <?php if ($_SESSION['user_data']['role'] == '1') : ?>
         <small class="d-block text-right mt-3">
-            <a href="<?php echo ROOT_URL; ?>/social">Wszystkie aktualizacje</a>
+            <a href="<?php echo ROOT_URL; ?>/social">Wszystkie wpisy</a>
         </small>
         <?php endif; ?>
     </div>

@@ -70,8 +70,12 @@
         <a class="btn btn-warning" href="<?php ROOT_URL ?>/tasks/edit/<?php echo $viewModel['tasks']['id'] ?>">Edytuj zadanie</a>
             <br><br>
         <?php endif; ?>
-        <a class="btn btn-danger" href="<?php ROOT_URL ?>/tasks/finish/<?php echo $viewModel['tasks']['id'] ?>">Zakończ zadanie</a>
-        <br><br>
+        <?php if ($viewModel['status']['stat'] != '1') : ?>
+
+        <?php else : ?>
+            <a class="btn btn-danger" href="<?php ROOT_URL ?>/tasks/finish/<?php echo $viewModel['tasks']['id'] ?>">Zakończ zadanie</a>
+            <br><br>
+        <?php endif; ?>
         <a class="btn btn-primary" href="<?php echo ROOT_URL; ?>/tasks">Powrót</a>
     </div>
 </div>
